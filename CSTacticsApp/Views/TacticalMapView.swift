@@ -12,7 +12,8 @@ struct TacticalMapView: View {
         GeometryReader { geometry in
             let availableWidth = max(geometry.size.width - 32, 1)
             let availableHeight = max(geometry.size.height - 72, 1)
-            let mapSide = min(availableWidth, availableHeight)
+            let mapContainerSize = CGSize(width: availableWidth, height: availableHeight)
+            let mapImageSize = UIImage(named: "mirage_map")?.size ?? CGSize(width: 1, height: 1)
 
             VStack(spacing: 16) {
                 ZoomableScrollView(
@@ -21,7 +22,8 @@ struct TacticalMapView: View {
                     doubleTapScale: 2.5
                 ) {
                     MapCanvas(
-                        mapSide: mapSide,
+                        containerSize: mapContainerSize,
+                        imageSize: mapImageSize,
                         lineups: lineups,
                         onSelect: { lineup in
                             selectedLineup = lineup
@@ -29,7 +31,7 @@ struct TacticalMapView: View {
                     )
                     .environmentObject(languageManager)
                 }
-                .frame(width: mapSide, height: mapSide)
+                .frame(width: mapContainerSize.width, height: mapContainerSize.height)
                 .clipShape(RoundedRectangle(cornerRadius: 14))
                 .overlay {
                     RoundedRectangle(cornerRadius: 14)
@@ -52,16 +54,22 @@ struct TacticalMapView: View {
 }
 
 private struct MapCanvas: View {
-    let mapSide: CGFloat
+    let containerSize: CGSize
+    let imageSize: CGSize
     let lineups: [UtilityLineup]
     let onSelect: (UtilityLineup) -> Void
 
     var body: some View {
+        let imageRect = fittedImageRect(
+            imageSize: imageSize,
+            containerSize: containerSize
+        )
+
         ZStack {
             Image("mirage_map")
                 .resizable()
                 .scaledToFit()
-                .frame(width: mapSide, height: mapSide)
+                .frame(width: containerSize.width, height: containerSize.height)
 
             ForEach(lineups) { lineup in
                 Button {
@@ -73,12 +81,40 @@ private struct MapCanvas: View {
                 .frame(width: 44, height: 44)
                 .contentShape(Rectangle())
                 .position(
-                    x: mapSide * lineup.mapX,
-                    y: mapSide * lineup.mapY
+                    x: imageRect.minX + imageRect.width * lineup.mapX,
+                    y: imageRect.minY + imageRect.height * lineup.mapY
                 )
             }
         }
-        .frame(width: mapSide, height: mapSide)
+        .frame(width: containerSize.width, height: containerSize.height)
+    }
+
+    private func fittedImageRect(imageSize: CGSize, containerSize: CGSize) -> CGRect {
+        let imageAspectRatio = imageSize.width / imageSize.height
+        let containerAspectRatio = containerSize.width / containerSize.height
+
+        let fittedSize: CGSize
+        if imageAspectRatio > containerAspectRatio {
+            fittedSize = CGSize(
+                width: containerSize.width,
+                height: containerSize.width / imageAspectRatio
+            )
+        } else {
+            fittedSize = CGSize(
+                width: containerSize.height * imageAspectRatio,
+                height: containerSize.height
+            )
+        }
+
+        let offsetX = (containerSize.width - fittedSize.width) / 2
+        let offsetY = (containerSize.height - fittedSize.height) / 2
+
+        return CGRect(
+            x: offsetX,
+            y: offsetY,
+            width: fittedSize.width,
+            height: fittedSize.height
+        )
     }
 }
 
