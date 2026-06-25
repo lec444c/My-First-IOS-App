@@ -5,6 +5,7 @@ enum L10n {
         case maps
         case mirage
         case lineupCount(Int)
+        case variantCount(Int)
         case settings
         case language
         case followSystem
@@ -28,6 +29,7 @@ enum L10n {
         case name
         case type
         case side
+        case category
         case difficulty
         case teachingImages
         case startPosition
@@ -62,6 +64,16 @@ enum L10n {
         case unofficialNoticeText
         case acknowledgements
         case acknowledgementsText
+        case mapFilterArea
+        case mapFilterUtilityType
+        case mapFilterFeatured
+        case mapFilterAll
+        case clusteredUtilities
+        case lineupVariants
+        case spawnRequirement
+        case targetPoints
+        case variantStartPoints
+        case lineConnections
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -81,6 +93,8 @@ enum L10n {
             return "Mirage"
         case .lineupCount(let count):
             return "\(count) utility lineups"
+        case .variantCount(let count):
+            return "\(count) variants"
         case .settings:
             return "Settings"
         case .language:
@@ -127,6 +141,8 @@ enum L10n {
             return "Type"
         case .side:
             return "Side"
+        case .category:
+            return "Category"
         case .difficulty:
             return "Difficulty"
         case .teachingImages:
@@ -195,6 +211,26 @@ enum L10n {
             return "Acknowledgements"
         case .acknowledgementsText:
             return "Thanks to the Counter-Strike community for lineup tutorials and tactical knowledge sharing."
+        case .mapFilterArea:
+            return "Area"
+        case .mapFilterUtilityType:
+            return "Utility Type"
+        case .mapFilterFeatured:
+            return "Featured"
+        case .mapFilterAll:
+            return "All"
+        case .clusteredUtilities:
+            return "Utilities"
+        case .lineupVariants:
+            return "Lineup Variants"
+        case .spawnRequirement:
+            return "Spawn / Body Position"
+        case .targetPoints:
+            return "Target Points"
+        case .variantStartPoints:
+            return "Variant Start Points"
+        case .lineConnections:
+            return "Line Connections"
         }
     }
 
@@ -206,6 +242,8 @@ enum L10n {
             return "Mirage"
         case .lineupCount(let count):
             return "\(count) 个道具点位"
+        case .variantCount(let count):
+            return "\(count) 个丢法"
         case .settings:
             return "设置"
         case .language:
@@ -252,6 +290,8 @@ enum L10n {
             return "类型"
         case .side:
             return "阵营"
+        case .category:
+            return "分类"
         case .difficulty:
             return "难度"
         case .teachingImages:
@@ -320,6 +360,26 @@ enum L10n {
             return "鸣谢"
         case .acknowledgementsText:
             return "感谢所有 CS 玩家社区的道具教学与战术分享。"
+        case .mapFilterArea:
+            return "区域"
+        case .mapFilterUtilityType:
+            return "道具类型"
+        case .mapFilterFeatured:
+            return "推荐"
+        case .mapFilterAll:
+            return "全部"
+        case .clusteredUtilities:
+            return "道具"
+        case .lineupVariants:
+            return "道具丢法"
+        case .spawnRequirement:
+            return "适用出生点 / 身位"
+        case .targetPoints:
+            return "目标点"
+        case .variantStartPoints:
+            return "变体站位点"
+        case .lineConnections:
+            return "站位到目标连线"
         }
     }
 }

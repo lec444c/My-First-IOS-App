@@ -5,50 +5,89 @@ struct TacticalMapView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @EnvironmentObject private var developerSettings: DeveloperSettings
 
-    @State private var selectedLineup: UtilityLineup?
+    @State private var selectedGroup: LineupGroup?
+    @State private var selectedGroupCluster: LineupCluster?
+    @State private var selectedAreaFilter: MapAreaFilter = .featured
+    @State private var selectedTypeFilter: MapUtilityTypeFilter = .all
+    @State private var currentZoomScale: CGFloat = 1.0
+    @State private var showDeveloperTargets = true
+    @State private var showDeveloperVariantStarts = true
+    @State private var showDeveloperLines = true
     @State private var editedCoordinates: [MapPointKey: CGPoint] = [:]
     @State private var activeCoordinate: EditedLineupCoordinate?
     @State private var lastEditedCoordinate: EditedLineupCoordinate?
     @State private var copyStatusMessage: String?
 
     let mapName: String
-    let lineups: [UtilityLineup]
+    let groups: [LineupGroup]
+
+    private var filteredGroups: [LineupGroup] {
+        groups.filter { group in
+            selectedAreaFilter.matches(group)
+                && selectedTypeFilter.matches(group)
+        }
+    }
 
     var body: some View {
         GeometryReader { geometry in
             let availableWidth = max(geometry.size.width - 32, 1)
-            let reservedHeight: CGFloat = developerSettings.isDeveloperModeEnabled ? 230 : 72
+            let reservedHeight: CGFloat = developerSettings.isDeveloperModeEnabled ? 420 : 176
             let availableHeight = max(geometry.size.height - reservedHeight, 1)
             let mapContainerSize = CGSize(width: availableWidth, height: availableHeight)
             let mapImageSize = UIImage(named: "mirage_map")?.size ?? CGSize(width: 1, height: 1)
 
-            VStack(spacing: 16) {
+            VStack(spacing: 12) {
+                MapFilterBar(
+                    selectedAreaFilter: $selectedAreaFilter,
+                    selectedTypeFilter: $selectedTypeFilter
+                )
+                .environmentObject(languageManager)
+
+                if developerSettings.isDeveloperModeEnabled {
+                    DeveloperDisplayControls(
+                        showTargets: $showDeveloperTargets,
+                        showVariantStarts: $showDeveloperVariantStarts,
+                        showLines: $showDeveloperLines
+                    )
+                    .environmentObject(languageManager)
+                }
+
                 ZoomableScrollView(
                     minScale: 1.0,
                     maxScale: 4.0,
                     doubleTapScale: 2.5,
-                    isPointEditingEnabled: developerSettings.isDeveloperModeEnabled
+                    isPointEditingEnabled: developerSettings.isDeveloperModeEnabled,
+                    zoomScale: $currentZoomScale
                 ) {
                     MapCanvas(
                         containerSize: mapContainerSize,
                         imageSize: mapImageSize,
-                        lineups: lineups,
+                        groups: filteredGroups,
                         editedCoordinates: editedCoordinates,
                         developerModeEnabled: developerSettings.isDeveloperModeEnabled,
-                        onSelect: { lineup in
-                            selectedLineup = lineup
+                        showDeveloperTargets: showDeveloperTargets,
+                        showDeveloperVariantStarts: showDeveloperVariantStarts,
+                        showDeveloperLines: showDeveloperLines,
+                        zoomScale: currentZoomScale,
+                        onSelect: { group in
+                            selectedGroup = group
                         },
-                        onCoordinateChanged: { lineup, kind, coordinate in
+                        onSelectCluster: { cluster in
+                            selectedGroupCluster = cluster
+                        },
+                        onCoordinateChanged: { group, variant, kind, coordinate in
                             updateEditedCoordinate(
-                                for: lineup,
+                                group: group,
+                                variant: variant,
                                 kind: kind,
                                 coordinate: coordinate,
                                 isFinished: false
                             )
                         },
-                        onCoordinateEnded: { lineup, kind, coordinate in
+                        onCoordinateEnded: { group, variant, kind, coordinate in
                             updateEditedCoordinate(
-                                for: lineup,
+                                group: group,
+                                variant: variant,
                                 kind: kind,
                                 coordinate: coordinate,
                                 isFinished: true
@@ -83,8 +122,17 @@ struct TacticalMapView: View {
         }
         .navigationTitle(mapName)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(item: $selectedLineup) { lineup in
-            LineupDetailView(lineup: lineup)
+        .navigationDestination(item: $selectedGroup) { group in
+            LineupGroupDetailView(group: group)
+        }
+        .sheet(item: $selectedGroupCluster) { cluster in
+            ClusterLineupSheet(cluster: cluster) { group in
+                selectedGroupCluster = nil
+                DispatchQueue.main.async {
+                    selectedGroup = group
+                }
+            }
+            .environmentObject(languageManager)
         }
     }
 
@@ -97,14 +145,16 @@ struct TacticalMapView: View {
     }
 
     private func updateEditedCoordinate(
-        for lineup: UtilityLineup,
+        group: LineupGroup,
+        variant: LineupVariant?,
         kind: MapPointKind,
         coordinate: CGPoint,
         isFinished: Bool
     ) {
+        let displayName = variant?.name.value(for: languageManager) ?? group.targetName.value(for: languageManager)
         let editedCoordinate = EditedLineupCoordinate(
-            id: MapPointKey(lineupID: lineup.id, kind: kind),
-            lineupName: lineup.name.value(for: languageManager),
+            id: MapPointKey(entityID: kind.entityID(group: group, variant: variant), kind: kind),
+            displayName: displayName,
             kind: kind,
             mapX: Double(coordinate.x),
             mapY: Double(coordinate.y)
@@ -131,20 +181,27 @@ struct TacticalMapView: View {
     }
 
     private func copyJSONCoordinates() {
-        let jsonItems = lineups.map { lineup in
-            let startCoordinate = coordinate(for: lineup, kind: .start) ?? .zero
-            var item: [String: Any] = [
-                "id": lineup.id.uuidString,
-                "startMapX": roundedCoordinate(Double(startCoordinate.x)),
-                "startMapY": roundedCoordinate(Double(startCoordinate.y))
-            ]
+        let jsonItems = groups.map { group in
+            let targetCoordinate = groupTargetCoordinate(for: group)
+            let variants = group.variants.map { variant in
+                let startCoordinate = variantStartCoordinate(for: group, variant: variant)
+                let variantTargetCoordinate = variantTargetCoordinate(for: group, variant: variant)
 
-            if let targetCoordinate = coordinate(for: lineup, kind: .target) {
-                item["targetMapX"] = roundedCoordinate(Double(targetCoordinate.x))
-                item["targetMapY"] = roundedCoordinate(Double(targetCoordinate.y))
+                return [
+                    "id": variant.id,
+                    "startMapX": roundedCoordinate(Double(startCoordinate.x)),
+                    "startMapY": roundedCoordinate(Double(startCoordinate.y)),
+                    "targetMapX": roundedCoordinate(Double(variantTargetCoordinate.x)),
+                    "targetMapY": roundedCoordinate(Double(variantTargetCoordinate.y))
+                ] as [String: Any]
             }
 
-            return item
+            return [
+                "id": group.id,
+                "targetMapX": roundedCoordinate(Double(targetCoordinate.x)),
+                "targetMapY": roundedCoordinate(Double(targetCoordinate.y)),
+                "variants": variants
+            ] as [String: Any]
         }
 
         if let data = try? JSONSerialization.data(
@@ -157,23 +214,122 @@ struct TacticalMapView: View {
         }
     }
 
-    private func coordinate(for lineup: UtilityLineup, kind: MapPointKind) -> CGPoint? {
-        let key = MapPointKey(lineupID: lineup.id, kind: kind)
+    private func groupTargetCoordinate(for group: LineupGroup) -> CGPoint {
+        let key = MapPointKey(entityID: group.id, kind: .groupTarget)
 
         if let editedCoordinate = editedCoordinates[key] {
             return editedCoordinate
         }
 
-        switch kind {
-        case .start:
-            return CGPoint(x: lineup.startMapX, y: lineup.startMapY)
-        case .target:
-            return lineup.targetCoordinate
+        return group.targetCoordinate
+    }
+
+    private func variantStartCoordinate(for group: LineupGroup, variant: LineupVariant) -> CGPoint {
+        let key = MapPointKey(entityID: variant.id, kind: .variantStart)
+
+        if let editedCoordinate = editedCoordinates[key] {
+            return editedCoordinate
         }
+
+        return variant.startCoordinate
+    }
+
+    private func variantTargetCoordinate(for group: LineupGroup, variant: LineupVariant) -> CGPoint {
+        let key = MapPointKey(entityID: group.id, kind: .groupTarget)
+
+        if let editedCoordinate = editedCoordinates[key] {
+            return editedCoordinate
+        }
+
+        return variant.targetCoordinate
     }
 
     private func roundedCoordinate(_ value: Double) -> Double {
         (value * 1000).rounded() / 1000
+    }
+}
+
+private struct MapFilterBar: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
+    @Binding var selectedAreaFilter: MapAreaFilter
+    @Binding var selectedTypeFilter: MapUtilityTypeFilter
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            filterTitle(L10n.text(.mapFilterArea, for: languageManager))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(MapAreaFilter.allCases) { filter in
+                        FilterChip(
+                            title: filter.displayName(for: languageManager),
+                            isSelected: selectedAreaFilter == filter
+                        ) {
+                            selectedAreaFilter = filter
+                        }
+                    }
+                }
+            }
+
+            filterTitle(L10n.text(.mapFilterUtilityType, for: languageManager))
+
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(MapUtilityTypeFilter.allCases) { filter in
+                        FilterChip(
+                            title: filter.displayName(for: languageManager),
+                            isSelected: selectedTypeFilter == filter
+                        ) {
+                            selectedTypeFilter = filter
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private func filterTitle(_ title: String) -> some View {
+        Text(title)
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(.secondary)
+    }
+}
+
+private struct DeveloperDisplayControls: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
+    @Binding var showTargets: Bool
+    @Binding var showVariantStarts: Bool
+    @Binding var showLines: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Toggle(L10n.text(.targetPoints, for: languageManager), isOn: $showTargets)
+            Toggle(L10n.text(.variantStartPoints, for: languageManager), isOn: $showVariantStarts)
+            Toggle(L10n.text(.lineConnections, for: languageManager), isOn: $showLines)
+        }
+        .font(.caption)
+        .toggleStyle(.switch)
+    }
+}
+
+private struct FilterChip: View {
+    let title: String
+    let isSelected: Bool
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Text(title)
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(isSelected ? .white : .primary)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
+                .background(isSelected ? Color.accentColor : Color(.secondarySystemBackground))
+                .clipShape(Capsule())
+        }
+        .buttonStyle(.plain)
     }
 }
 
@@ -184,18 +340,24 @@ private struct MapCanvas: View {
 
     let containerSize: CGSize
     let imageSize: CGSize
-    let lineups: [UtilityLineup]
+    let groups: [LineupGroup]
     let editedCoordinates: [MapPointKey: CGPoint]
     let developerModeEnabled: Bool
-    let onSelect: (UtilityLineup) -> Void
-    let onCoordinateChanged: (UtilityLineup, MapPointKind, CGPoint) -> Void
-    let onCoordinateEnded: (UtilityLineup, MapPointKind, CGPoint) -> Void
+    let showDeveloperTargets: Bool
+    let showDeveloperVariantStarts: Bool
+    let showDeveloperLines: Bool
+    let zoomScale: CGFloat
+    let onSelect: (LineupGroup) -> Void
+    let onSelectCluster: (LineupCluster) -> Void
+    let onCoordinateChanged: (LineupGroup, LineupVariant?, MapPointKind, CGPoint) -> Void
+    let onCoordinateEnded: (LineupGroup, LineupVariant?, MapPointKind, CGPoint) -> Void
 
     var body: some View {
         let imageRect = fittedImageRect(
             imageSize: imageSize,
             containerSize: containerSize
         )
+        let clusters = clusteredGroups(in: imageRect)
 
         ZStack {
             Image("mirage_map")
@@ -203,64 +365,75 @@ private struct MapCanvas: View {
                 .scaledToFit()
                 .frame(width: containerSize.width, height: containerSize.height)
 
-            ForEach(lineups) { lineup in
-                if let targetCoordinate = targetCoordinate(for: lineup) {
-                    let startPoint = pointLocation(
-                        for: startCoordinate(for: lineup),
-                        in: imageRect
-                    )
-                    let targetPoint = pointLocation(
-                        for: targetCoordinate,
-                        in: imageRect
-                    )
+            if developerModeEnabled {
+                if showDeveloperLines {
+                    ForEach(groups) { group in
+                        ForEach(group.variants) { variant in
+                            let startPoint = pointLocation(
+                                for: variantStartCoordinate(for: group, variant: variant),
+                                in: imageRect
+                            )
+                            let targetPoint = pointLocation(
+                                for: variantTargetCoordinate(for: group, variant: variant),
+                                in: imageRect
+                            )
 
-                    Path { path in
-                        path.move(to: startPoint)
-                        path.addLine(to: targetPoint)
+                            Path { path in
+                                path.move(to: startPoint)
+                                path.addLine(to: targetPoint)
+                            }
+                            .stroke(group.type.color.opacity(0.75), lineWidth: 2)
+                        }
                     }
-                    .stroke(lineup.type.color.opacity(0.75), lineWidth: 2)
-                }
-            }
-
-            ForEach(lineups) { lineup in
-                let startCoordinate = startCoordinate(for: lineup)
-                let startPoint = pointLocation(for: startCoordinate, in: imageRect)
-
-                if developerModeEnabled {
-                    draggablePoint(
-                        lineup: lineup,
-                        kind: .start,
-                        imageRect: imageRect,
-                        pointSize: CGSize(width: 124, height: 76)
-                    )
-                    .position(startPoint)
-                } else {
-                    Button {
-                        onSelect(lineup)
-                    } label: {
-                        UtilityPoint(lineup: lineup)
-                    }
-                    .buttonStyle(.plain)
-                    .frame(width: 44, height: 44)
-                    .contentShape(Rectangle())
-                    .position(startPoint)
                 }
 
-                if let targetCoordinate = targetCoordinate(for: lineup) {
-                    let targetPoint = pointLocation(for: targetCoordinate, in: imageRect)
+                if showDeveloperTargets {
+                    ForEach(groups) { group in
+                        let targetPoint = pointLocation(for: groupTargetCoordinate(for: group), in: imageRect)
 
-                    if developerModeEnabled {
-                        draggablePoint(
-                            lineup: lineup,
-                            kind: .target,
-                            imageRect: imageRect,
-                            pointSize: CGSize(width: 112, height: 68)
-                        )
-                        .position(targetPoint)
-                    } else {
-                        TargetPoint(lineup: lineup)
-                            .frame(width: 24, height: 24)
+                        draggableGroupTarget(group: group, imageRect: imageRect)
                             .position(targetPoint)
+                    }
+                }
+
+                if showDeveloperVariantStarts {
+                    ForEach(groups) { group in
+                        ForEach(group.variants) { variant in
+                            let startPoint = pointLocation(
+                                for: variantStartCoordinate(for: group, variant: variant),
+                                in: imageRect
+                            )
+
+                            draggableVariantStart(group: group, variant: variant, imageRect: imageRect)
+                                .position(startPoint)
+                        }
+                    }
+                }
+            } else {
+                ForEach(clusters) { cluster in
+                    if cluster.groups.count > 1 {
+                        Button {
+                            onSelectCluster(cluster)
+                        } label: {
+                            ClusterPoint(count: cluster.groups.count)
+                        }
+                        .buttonStyle(.plain)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                        .position(cluster.center)
+                        .accessibilityLabel(
+                            "\(cluster.groups.count) \(L10n.text(.clusteredUtilities, for: languageManager))"
+                        )
+                    } else if let group = cluster.groups.first {
+                        Button {
+                            onSelect(group)
+                        } label: {
+                            UtilityPoint(group: group)
+                        }
+                        .buttonStyle(.plain)
+                        .frame(width: 44, height: 44)
+                        .contentShape(Rectangle())
+                        .position(cluster.center)
                     }
                 }
             }
@@ -269,14 +442,40 @@ private struct MapCanvas: View {
         .coordinateSpace(name: coordinateSpaceName)
     }
 
-    private func draggablePoint(
-        lineup: UtilityLineup,
-        kind: MapPointKind,
-        imageRect: CGRect,
-        pointSize: CGSize
+    private func clusteredGroups(in imageRect: CGRect) -> [LineupCluster] {
+        if developerModeEnabled {
+            return groups.map { group in
+                LineupCluster(
+                    groups: [group],
+                    center: pointLocation(for: groupTargetCoordinate(for: group), in: imageRect)
+                )
+            }
+        }
+
+        let screenDistance: CGFloat = zoomScale > 2.0 ? 28 : 58
+        var clusters: [LineupCluster] = []
+
+        for group in groups {
+            let point = pointLocation(for: groupTargetCoordinate(for: group), in: imageRect)
+
+            if let index = clusters.firstIndex(where: { cluster in
+                distance(from: cluster.center, to: point) * max(zoomScale, 1) <= screenDistance
+            }) {
+                clusters[index].add(group, at: point)
+            } else {
+                clusters.append(LineupCluster(groups: [group], center: point))
+            }
+        }
+
+        return clusters
+    }
+
+    private func draggableGroupTarget(
+        group: LineupGroup,
+        imageRect: CGRect
     ) -> some View {
-        EditableMapPoint(lineup: lineup, kind: kind)
-            .frame(width: pointSize.width, height: pointSize.height)
+        EditableMapPoint(title: group.targetName.value(for: languageManager), group: group, kind: .groupTarget)
+            .frame(width: 124, height: 76)
             .contentShape(Rectangle())
             .highPriorityGesture(
                 DragGesture(
@@ -284,22 +483,37 @@ private struct MapCanvas: View {
                     coordinateSpace: .named(coordinateSpaceName)
                 )
                 .onChanged { value in
-                    let newCoordinate = normalizedCoordinate(
-                        from: value.location,
-                        in: imageRect
-                    )
-                    onCoordinateChanged(lineup, kind, newCoordinate)
+                    let newCoordinate = normalizedCoordinate(from: value.location, in: imageRect)
+                    onCoordinateChanged(group, nil, .groupTarget, newCoordinate)
                 }
                 .onEnded { value in
-                    let newCoordinate = normalizedCoordinate(
-                        from: value.location,
-                        in: imageRect
-                    )
-                    onCoordinateEnded(lineup, kind, newCoordinate)
+                    let newCoordinate = normalizedCoordinate(from: value.location, in: imageRect)
+                    onCoordinateEnded(group, nil, .groupTarget, newCoordinate)
                 }
             )
-            .accessibilityLabel(
-                "\(lineup.name.value(for: languageManager)), \(kind.displayName(for: languageManager))"
+    }
+
+    private func draggableVariantStart(
+        group: LineupGroup,
+        variant: LineupVariant,
+        imageRect: CGRect
+    ) -> some View {
+        EditableMapPoint(title: variant.name.value(for: languageManager), group: group, kind: .variantStart)
+            .frame(width: 124, height: 76)
+            .contentShape(Rectangle())
+            .highPriorityGesture(
+                DragGesture(
+                    minimumDistance: 0,
+                    coordinateSpace: .named(coordinateSpaceName)
+                )
+                .onChanged { value in
+                    let newCoordinate = normalizedCoordinate(from: value.location, in: imageRect)
+                    onCoordinateChanged(group, variant, .variantStart, newCoordinate)
+                }
+                .onEnded { value in
+                    let newCoordinate = normalizedCoordinate(from: value.location, in: imageRect)
+                    onCoordinateEnded(group, variant, .variantStart, newCoordinate)
+                }
             )
     }
 
@@ -331,32 +545,38 @@ private struct MapCanvas: View {
         )
     }
 
-    private func startCoordinate(for lineup: UtilityLineup) -> CGPoint {
-        let key = MapPointKey(lineupID: lineup.id, kind: .start)
+    private func groupTargetCoordinate(for group: LineupGroup) -> CGPoint {
+        let key = MapPointKey(entityID: group.id, kind: .groupTarget)
 
         if let editedCoordinate = editedCoordinates[key] {
             return editedCoordinate
         }
 
-        return CGPoint(x: lineup.startMapX, y: lineup.startMapY)
+        return group.targetCoordinate
     }
 
-    private func targetCoordinate(for lineup: UtilityLineup) -> CGPoint? {
-        let key = MapPointKey(lineupID: lineup.id, kind: .target)
+    private func variantStartCoordinate(for group: LineupGroup, variant: LineupVariant) -> CGPoint {
+        let key = MapPointKey(entityID: variant.id, kind: .variantStart)
 
         if let editedCoordinate = editedCoordinates[key] {
             return editedCoordinate
         }
 
-        return lineup.targetCoordinate
+        return variant.startCoordinate
     }
 
-    private func pointLocation(for coordinate: CGPoint?, in imageRect: CGRect) -> CGPoint {
-        guard let coordinate else {
-            return .zero
+    private func variantTargetCoordinate(for group: LineupGroup, variant: LineupVariant) -> CGPoint {
+        let key = MapPointKey(entityID: group.id, kind: .groupTarget)
+
+        if let editedCoordinate = editedCoordinates[key] {
+            return editedCoordinate
         }
 
-        return CGPoint(
+        return variant.targetCoordinate
+    }
+
+    private func pointLocation(for coordinate: CGPoint, in imageRect: CGRect) -> CGPoint {
+        CGPoint(
             x: imageRect.minX + imageRect.width * coordinate.x,
             y: imageRect.minY + imageRect.height * coordinate.y
         )
@@ -372,6 +592,13 @@ private struct MapCanvas: View {
         )
     }
 
+    private func distance(from firstPoint: CGPoint, to secondPoint: CGPoint) -> CGFloat {
+        let deltaX = firstPoint.x - secondPoint.x
+        let deltaY = firstPoint.y - secondPoint.y
+
+        return sqrt(deltaX * deltaX + deltaY * deltaY)
+    }
+
     private func clamped(_ value: CGFloat) -> CGFloat {
         min(max(value, 0), 1)
     }
@@ -380,14 +607,14 @@ private struct MapCanvas: View {
 private struct UtilityPoint: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
-    let lineup: UtilityLineup
+    let group: LineupGroup
 
     var body: some View {
-        Text(lineup.type.symbol)
+        Text(group.type.symbol)
             .font(.headline)
-            .foregroundStyle(lineup.type == .flash ? .black : .white)
+            .foregroundStyle(group.type == .flash ? .black : .white)
             .frame(width: 34, height: 34)
-            .background(lineup.type.color)
+            .background(group.type.color)
             .clipShape(Circle())
             .overlay {
                 Circle()
@@ -396,39 +623,59 @@ private struct UtilityPoint: View {
             .shadow(radius: 3)
             .frame(width: 44, height: 44)
             .accessibilityLabel(
-                "\(lineup.name.value(for: languageManager)), \(lineup.type.displayName(for: languageManager))"
+                "\(group.targetName.value(for: languageManager)), \(group.type.displayName(for: languageManager))"
             )
     }
 }
 
-private struct TargetPoint: View {
-    let lineup: UtilityLineup
+private struct ClusterPoint: View {
+    let count: Int
+
+    var body: some View {
+        Text("\(count)")
+            .font(.headline.weight(.bold))
+            .foregroundStyle(.white)
+            .frame(width: 36, height: 36)
+            .background(Color.accentColor)
+            .clipShape(Circle())
+            .overlay {
+                Circle()
+                    .stroke(.white, lineWidth: 2)
+            }
+            .shadow(radius: 4)
+            .frame(width: 44, height: 44)
+    }
+}
+
+private struct VariantStartPoint: View {
+    let group: LineupGroup
 
     var body: some View {
         Circle()
-            .fill(lineup.type.color)
-            .frame(width: 16, height: 16)
+            .fill(group.type.color)
+            .frame(width: 18, height: 18)
             .overlay {
                 Circle()
                     .stroke(.white, lineWidth: 2)
             }
             .shadow(radius: 2)
+            .frame(width: 44, height: 44)
     }
 }
 
 private struct EditableMapPoint: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
-    let lineup: UtilityLineup
+    let title: String
+    let group: LineupGroup
     let kind: MapPointKind
 
     var body: some View {
         ZStack {
-            if kind == .start {
-                UtilityPoint(lineup: lineup)
+            if kind == .groupTarget {
+                UtilityPoint(group: group)
             } else {
-                TargetPoint(lineup: lineup)
-                    .frame(width: 44, height: 44)
+                VariantStartPoint(group: group)
             }
 
             Text(labelText)
@@ -448,57 +695,209 @@ private struct EditableMapPoint: View {
     }
 
     private var shortName: String {
-        let name = lineup.name.value(for: languageManager)
-        let parts = name.split(separator: " ")
+        let parts = title.split(separator: " ")
 
         if parts.count > 1 {
             return parts.prefix(2).joined(separator: " ")
         }
 
-        return name
+        return title
+    }
+}
+
+private struct ClusterLineupSheet: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+    @Environment(\.dismiss) private var dismiss
+
+    let cluster: LineupCluster
+    let onSelect: (LineupGroup) -> Void
+
+    var body: some View {
+        NavigationStack {
+            List(cluster.groups) { group in
+                Button {
+                    dismiss()
+                    onSelect(group)
+                } label: {
+                    HStack(spacing: 12) {
+                        UtilityPoint(group: group)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(group.targetName.value(for: languageManager))
+                                .font(.headline)
+                            Text(group.type.displayName(for: languageManager))
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                            Text(L10n.text(.variantCount(group.variants.count), for: languageManager))
+                                .font(.caption)
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                .buttonStyle(.plain)
+            }
+            .navigationTitle(L10n.text(.clusteredUtilities, for: languageManager))
+            .navigationBarTitleDisplayMode(.inline)
+        }
+        .presentationDetents([.medium])
+    }
+}
+
+private enum MapAreaFilter: CaseIterable, Hashable, Identifiable {
+    case featured
+    case aSite
+    case bSite
+    case mid
+    case tSide
+    case ctSide
+
+    var id: Self {
+        self
+    }
+
+    func displayName(for languageManager: LanguageManager) -> String {
+        switch self {
+        case .featured:
+            return L10n.text(.mapFilterFeatured, for: languageManager)
+        case .aSite:
+            return LineupCategory.aSite.displayName(for: languageManager)
+        case .bSite:
+            return LineupCategory.bSite.displayName(for: languageManager)
+        case .mid:
+            return LineupCategory.mid.displayName(for: languageManager)
+        case .tSide:
+            return LineupCategory.tSide.displayName(for: languageManager)
+        case .ctSide:
+            return LineupCategory.ctSide.displayName(for: languageManager)
+        }
+    }
+
+    func matches(_ group: LineupGroup) -> Bool {
+        switch self {
+        case .featured:
+            return group.isFeatured
+        case .aSite:
+            return group.category == .aSite
+        case .bSite:
+            return group.category == .bSite
+        case .mid:
+            return group.category == .mid
+        case .tSide:
+            return group.category == .tSide
+        case .ctSide:
+            return group.category == .ctSide
+        }
+    }
+}
+
+private enum MapUtilityTypeFilter: CaseIterable, Hashable, Identifiable {
+    case all
+    case smoke
+    case flash
+    case molotov
+    case he
+
+    var id: Self {
+        self
+    }
+
+    func displayName(for languageManager: LanguageManager) -> String {
+        switch self {
+        case .all:
+            return L10n.text(.mapFilterAll, for: languageManager)
+        case .smoke:
+            return UtilityType.smoke.displayName(for: languageManager)
+        case .flash:
+            return UtilityType.flash.displayName(for: languageManager)
+        case .molotov:
+            return UtilityType.molotov.displayName(for: languageManager)
+        case .he:
+            return UtilityType.he.displayName(for: languageManager)
+        }
+    }
+
+    func matches(_ group: LineupGroup) -> Bool {
+        switch self {
+        case .all:
+            return true
+        case .smoke:
+            return group.type == .smoke
+        case .flash:
+            return group.type == .flash
+        case .molotov:
+            return group.type == .molotov
+        case .he:
+            return group.type == .he
+        }
+    }
+}
+
+private struct LineupCluster: Identifiable {
+    var groups: [LineupGroup]
+    var center: CGPoint
+
+    var id: String {
+        groups.map { $0.id }.joined(separator: "-")
+    }
+
+    mutating func add(_ group: LineupGroup, at point: CGPoint) {
+        let existingCount = CGFloat(groups.count)
+        center = CGPoint(
+            x: (center.x * existingCount + point.x) / (existingCount + 1),
+            y: (center.y * existingCount + point.y) / (existingCount + 1)
+        )
+        groups.append(group)
     }
 }
 
 private enum MapPointKind: String, Hashable {
-    case start
-    case target
+    case groupTarget
+    case variantStart
 
     func displayName(for languageManager: LanguageManager) -> String {
         switch self {
-        case .start:
-            return L10n.text(.startPoint, for: languageManager)
-        case .target:
+        case .groupTarget:
             return L10n.text(.targetPoint, for: languageManager)
+        case .variantStart:
+            return L10n.text(.startPoint, for: languageManager)
+        }
+    }
+
+    func entityID(group: LineupGroup, variant: LineupVariant?) -> String {
+        switch self {
+        case .groupTarget:
+            return group.id
+        case .variantStart:
+            return variant?.id ?? group.id
         }
     }
 
     var xFieldName: String {
         switch self {
-        case .start:
-            return "startMapX"
-        case .target:
+        case .groupTarget:
             return "targetMapX"
+        case .variantStart:
+            return "startMapX"
         }
     }
 
     var yFieldName: String {
         switch self {
-        case .start:
-            return "startMapY"
-        case .target:
+        case .groupTarget:
             return "targetMapY"
+        case .variantStart:
+            return "startMapY"
         }
     }
 }
 
 private struct MapPointKey: Hashable {
-    let lineupID: UUID
+    let entityID: String
     let kind: MapPointKind
 }
 
 private struct EditedLineupCoordinate: Identifiable {
     let id: MapPointKey
-    let lineupName: String
+    let displayName: String
     let kind: MapPointKind
     let mapX: Double
     let mapY: Double
@@ -529,7 +928,7 @@ private struct DeveloperCoordinatePanel: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
 
-                Text("\(coordinate.lineupName) \(coordinate.kind.displayName(for: languageManager))")
+                Text("\(coordinate.displayName) \(coordinate.kind.displayName(for: languageManager))")
                     .font(.subheadline.weight(.semibold))
 
                 Text(coordinate.coordinateText)
@@ -574,6 +973,7 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     let maxScale: CGFloat
     let doubleTapScale: CGFloat
     let isPointEditingEnabled: Bool
+    @Binding var zoomScale: CGFloat
     let content: Content
 
     init(
@@ -581,12 +981,14 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         maxScale: CGFloat,
         doubleTapScale: CGFloat,
         isPointEditingEnabled: Bool,
+        zoomScale: Binding<CGFloat>,
         @ViewBuilder content: () -> Content
     ) {
         self.minScale = minScale
         self.maxScale = maxScale
         self.doubleTapScale = doubleTapScale
         self.isPointEditingEnabled = isPointEditingEnabled
+        self._zoomScale = zoomScale
         self.content = content()
     }
 
@@ -654,6 +1056,16 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             hostingController?.view
         }
 
+        func scrollViewDidZoom(_ scrollView: UIScrollView) {
+            let newZoomScale = scrollView.zoomScale
+
+            if abs(parent.zoomScale - newZoomScale) > 0.01 {
+                DispatchQueue.main.async {
+                    self.parent.zoomScale = newZoomScale
+                }
+            }
+        }
+
         @objc func handleDoubleTap(_ gesture: UITapGestureRecognizer) {
             guard let scrollView else {
                 return
@@ -688,7 +1100,7 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     NavigationStack {
         TacticalMapView(
             mapName: L10n.text(.mirage, for: languageManager),
-            lineups: LineupStore.mirageLineups
+            groups: LineupStore.mirageLineupGroups
         )
         .environmentObject(languageManager)
         .environmentObject(developerSettings)

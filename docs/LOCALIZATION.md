@@ -40,6 +40,7 @@ CSTacticsApp 支持 English 和简体中文。用户选择语言由 `LanguageMan
 - `name`: 名称 / Name
 - `type`: 类型 / Type
 - `side`: 阵营 / Side
+- `category`: 分类 / Category
 - `difficulty`: 难度 / Difficulty
 - `position`: 位置 / Position
 - `startArea`: 起始位置 / Start Area
@@ -68,6 +69,17 @@ CSTacticsApp 支持 English 和简体中文。用户选择语言由 `LanguageMan
 - `unofficialNoticeText`: 非官方声明文案
 - `acknowledgements`: 鸣谢 / Acknowledgements
 - `acknowledgementsText`: 鸣谢文案
+- `mapFilterArea`: 区域 / Area
+- `mapFilterUtilityType`: 道具类型 / Utility Type
+- `mapFilterFeatured`: 推荐 / Featured
+- `mapFilterAll`: 全部 / All
+- `clusteredUtilities`: 道具 / Utilities
+- `lineupVariants`: 道具丢法 / Lineup Variants
+- `variantCount`: 变体数量文案
+- `spawnRequirement`: 适用出生点 / 身位 / Spawn / Body Position
+- `targetPoints`: 目标点 / Target Points
+- `variantStartPoints`: 变体站位点 / Variant Start Points
+- `lineConnections`: 站位到目标连线 / Line Connections
 
 ## 检查方式
 
