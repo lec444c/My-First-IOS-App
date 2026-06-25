@@ -12,6 +12,9 @@ struct UtilityLineup: Identifiable, Hashable {
     let throwMethod: LocalizedText
     let difficulty: String
     let description: LocalizedText
+    let positionImageName: String
+    let aimImageName: String
+    let resultImageName: String
     let mapX: Double
     let mapY: Double
 }

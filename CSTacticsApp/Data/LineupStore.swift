@@ -18,6 +18,9 @@ enum LineupStore {
                 en: "Blocks Mid Window for mid control.",
                 zhHans: "封中路窗口，方便拿中路控制。"
             ),
+            positionImageName: "mirage_window_smoke_position",
+            aimImageName: "mirage_window_smoke_aim",
+            resultImageName: "mirage_window_smoke_result",
             mapX: 0.46,
             mapY: 0.31
         ),
@@ -37,6 +40,9 @@ enum LineupStore {
                 en: "Blocks Connector during a mid take.",
                 zhHans: "封拱门，减少中路压力。"
             ),
+            positionImageName: "mirage_connector_smoke_position",
+            aimImageName: "mirage_connector_smoke_aim",
+            resultImageName: "mirage_connector_smoke_result",
             mapX: 0.52,
             mapY: 0.40
         ),
@@ -56,6 +62,9 @@ enum LineupStore {
                 en: "Cuts off Jungle for an A execute.",
                 zhHans: "封 Jungle，配合 A 点爆弹。"
             ),
+            positionImageName: "mirage_jungle_smoke_position",
+            aimImageName: "mirage_jungle_smoke_aim",
+            resultImageName: "mirage_jungle_smoke_result",
             mapX: 0.58,
             mapY: 0.35
         ),
@@ -75,6 +84,9 @@ enum LineupStore {
                 en: "Blocks CT for an A execute.",
                 zhHans: "封 CT，方便进 A 点。"
             ),
+            positionImageName: "mirage_ct_smoke_position",
+            aimImageName: "mirage_ct_smoke_aim",
+            resultImageName: "mirage_ct_smoke_result",
             mapX: 0.63,
             mapY: 0.37
         ),
@@ -94,6 +106,9 @@ enum LineupStore {
                 en: "Blocks Stairs for an A execute.",
                 zhHans: "封楼梯，压缩 A 点防守。"
             ),
+            positionImageName: "mirage_stairs_smoke_position",
+            aimImageName: "mirage_stairs_smoke_aim",
+            resultImageName: "mirage_stairs_smoke_result",
             mapX: 0.57,
             mapY: 0.42
         ),
@@ -113,6 +128,9 @@ enum LineupStore {
                 en: "Blocks Market Window for a B execute.",
                 zhHans: "封超市窗口，方便进 B 点。"
             ),
+            positionImageName: "mirage_market_window_smoke_position",
+            aimImageName: "mirage_market_window_smoke_aim",
+            resultImageName: "mirage_market_window_smoke_result",
             mapX: 0.27,
             mapY: 0.31
         ),
@@ -132,6 +150,9 @@ enum LineupStore {
                 en: "Blocks Short pressure on a B hit.",
                 zhHans: "封 B 小，减轻进 B 压力。"
             ),
+            positionImageName: "mirage_b_short_smoke_position",
+            aimImageName: "mirage_b_short_smoke_aim",
+            resultImageName: "mirage_b_short_smoke_result",
             mapX: 0.35,
             mapY: 0.37
         ),
@@ -151,6 +172,9 @@ enum LineupStore {
                 en: "Entry flash for A Site.",
                 zhHans: "进 A 点用的突破闪。"
             ),
+            positionImageName: "mirage_a_site_flash_position",
+            aimImageName: "mirage_a_site_flash_aim",
+            resultImageName: "mirage_a_site_flash_result",
             mapX: 0.53,
             mapY: 0.46
         ),
@@ -170,6 +194,9 @@ enum LineupStore {
                 en: "Slows an A Ramp push.",
                 zhHans: "拖住 A Ramp 前压。"
             ),
+            positionImageName: "mirage_ramp_molotov_position",
+            aimImageName: "mirage_ramp_molotov_aim",
+            resultImageName: "mirage_ramp_molotov_result",
             mapX: 0.50,
             mapY: 0.52
         ),
@@ -189,6 +216,9 @@ enum LineupStore {
                 en: "Clears Default on A Site.",
                 zhHans: "清 A 点默认包位。"
             ),
+            positionImageName: "mirage_default_molotov_position",
+            aimImageName: "mirage_default_molotov_aim",
+            resultImageName: "mirage_default_molotov_result",
             mapX: 0.60,
             mapY: 0.47
         )

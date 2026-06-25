@@ -14,6 +14,11 @@ enum L10n {
         case type
         case side
         case difficulty
+        case images
+        case startPosition
+        case aimPoint
+        case result
+        case placeholder
         case position
         case startArea
         case targetArea
@@ -57,6 +62,16 @@ enum L10n {
             return "Side"
         case .difficulty:
             return "Difficulty"
+        case .images:
+            return "Images"
+        case .startPosition:
+            return "Start Position"
+        case .aimPoint:
+            return "Aim Point"
+        case .result:
+            return "Result"
+        case .placeholder:
+            return "Placeholder"
         case .position:
             return "Position"
         case .startArea:
@@ -98,6 +113,16 @@ enum L10n {
             return "阵营"
         case .difficulty:
             return "难度"
+        case .images:
+            return "图片"
+        case .startPosition:
+            return "站位图"
+        case .aimPoint:
+            return "瞄点图"
+        case .result:
+            return "效果图"
+        case .placeholder:
+            return "Placeholder"
         case .position:
             return "位置"
         case .startArea:

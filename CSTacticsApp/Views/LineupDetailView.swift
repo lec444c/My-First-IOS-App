@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct LineupDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
@@ -12,6 +13,27 @@ struct LineupDetailView: View {
                 detailRow(L10n.text(.type, for: languageManager), lineup.type.displayName(for: languageManager))
                 detailRow(L10n.text(.side, for: languageManager), lineup.side)
                 detailRow(L10n.text(.difficulty, for: languageManager), localizedDifficulty)
+            }
+
+            Section(L10n.text(.images, for: languageManager)) {
+                VStack(spacing: 12) {
+                    TeachingImageCard(
+                        title: L10n.text(.startPosition, for: languageManager),
+                        imageName: lineup.positionImageName,
+                        placeholderText: L10n.text(.placeholder, for: languageManager)
+                    )
+                    TeachingImageCard(
+                        title: L10n.text(.aimPoint, for: languageManager),
+                        imageName: lineup.aimImageName,
+                        placeholderText: L10n.text(.placeholder, for: languageManager)
+                    )
+                    TeachingImageCard(
+                        title: L10n.text(.result, for: languageManager),
+                        imageName: lineup.resultImageName,
+                        placeholderText: L10n.text(.placeholder, for: languageManager)
+                    )
+                }
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
 
             Section(L10n.text(.position, for: languageManager)) {
@@ -55,6 +77,41 @@ struct LineupDetailView: View {
             Text(value)
                 .multilineTextAlignment(.trailing)
         }
+    }
+}
+
+private struct TeachingImageCard: View {
+    let title: String
+    let imageName: String
+    let placeholderText: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text(title)
+                .font(.headline)
+
+            Group {
+                if let image = UIImage(named: imageName) {
+                    Image(uiImage: image)
+                        .resizable()
+                        .scaledToFit()
+                } else {
+                    RoundedRectangle(cornerRadius: 8)
+                        .fill(Color(.systemGray5))
+                        .frame(height: 150)
+                        .overlay {
+                            Text(placeholderText)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                }
+            }
+            .frame(maxWidth: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 8))
+        }
+        .padding(12)
+        .background(Color(.secondarySystemBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 8))
     }
 }
 
