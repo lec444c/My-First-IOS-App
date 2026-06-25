@@ -4,131 +4,221 @@ enum LineupStore {
     static let mirageLineups: [UtilityLineup] = [
         UtilityLineup(
             mapName: "Mirage",
-            name: "Window Smoke",
+            name: LocalizedText(en: "Window Smoke", zhHans: "中路窗口烟"),
             type: .smoke,
             side: "T",
-            startArea: "T Spawn",
-            targetArea: "Mid Window",
-            throwMethod: "Position: T Spawn. Aim: roof reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
+            targetArea: LocalizedText(en: "Mid Window", zhHans: "中路窗口"),
+            throwMethod: LocalizedText(
+                en: "Position: T Spawn. Aim: roof reference. Throw: jump throw.",
+                zhHans: "站位：匪家。瞄点：屋顶参考点。投掷：跳投。"
+            ),
             difficulty: "Medium",
-            description: "Blocks Mid Window for mid control.",
+            description: LocalizedText(
+                en: "Blocks Mid Window for mid control.",
+                zhHans: "封中路窗口，方便拿中路控制。"
+            ),
+            positionImageName: "mirage_window_smoke_position",
+            aimImageName: "mirage_window_smoke_aim",
+            resultImageName: "mirage_window_smoke_result",
             mapX: 0.46,
             mapY: 0.31
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Connector Smoke",
+            name: LocalizedText(en: "Connector Smoke", zhHans: "拱门烟"),
             type: .smoke,
             side: "T",
-            startArea: "T Spawn",
-            targetArea: "Connector",
-            throwMethod: "Position: T Spawn. Aim: wall reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
+            targetArea: LocalizedText(en: "Connector", zhHans: "拱门"),
+            throwMethod: LocalizedText(
+                en: "Position: T Spawn. Aim: wall reference. Throw: jump throw.",
+                zhHans: "站位：匪家。瞄点：墙面参考点。投掷：跳投。"
+            ),
             difficulty: "Medium",
-            description: "Blocks Connector during a mid take.",
+            description: LocalizedText(
+                en: "Blocks Connector during a mid take.",
+                zhHans: "封拱门，减少中路压力。"
+            ),
+            positionImageName: "mirage_connector_smoke_position",
+            aimImageName: "mirage_connector_smoke_aim",
+            resultImageName: "mirage_connector_smoke_result",
             mapX: 0.52,
             mapY: 0.40
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Jungle Smoke",
+            name: LocalizedText(en: "Jungle Smoke", zhHans: "Jungle 烟"),
             type: .smoke,
             side: "T",
-            startArea: "A Ramp",
-            targetArea: "Jungle",
-            throwMethod: "Position: A Ramp. Aim: top reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
+            targetArea: LocalizedText(en: "Jungle", zhHans: "Jungle"),
+            throwMethod: LocalizedText(
+                en: "Position: A Ramp. Aim: top reference. Throw: jump throw.",
+                zhHans: "站位：A Ramp。瞄点：上方参考点。投掷：跳投。"
+            ),
             difficulty: "Medium",
-            description: "Cuts off Jungle for an A execute.",
+            description: LocalizedText(
+                en: "Cuts off Jungle for an A execute.",
+                zhHans: "封 Jungle，配合 A 点爆弹。"
+            ),
+            positionImageName: "mirage_jungle_smoke_position",
+            aimImageName: "mirage_jungle_smoke_aim",
+            resultImageName: "mirage_jungle_smoke_result",
             mapX: 0.58,
             mapY: 0.35
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "CT Smoke",
+            name: LocalizedText(en: "CT Smoke", zhHans: "CT 烟"),
             type: .smoke,
             side: "T",
-            startArea: "T Spawn",
-            targetArea: "CT",
-            throwMethod: "Position: T Spawn. Aim: wall reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
+            targetArea: LocalizedText(en: "CT", zhHans: "CT"),
+            throwMethod: LocalizedText(
+                en: "Position: T Spawn. Aim: wall reference. Throw: jump throw.",
+                zhHans: "站位：匪家。瞄点：墙体参考点。投掷：跳投。"
+            ),
             difficulty: "Easy",
-            description: "Blocks CT for an A execute.",
+            description: LocalizedText(
+                en: "Blocks CT for an A execute.",
+                zhHans: "封 CT，方便进 A 点。"
+            ),
+            positionImageName: "mirage_ct_smoke_position",
+            aimImageName: "mirage_ct_smoke_aim",
+            resultImageName: "mirage_ct_smoke_result",
             mapX: 0.63,
             mapY: 0.37
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Stairs Smoke",
+            name: LocalizedText(en: "Stairs Smoke", zhHans: "楼梯烟"),
             type: .smoke,
             side: "T",
-            startArea: "A Ramp",
-            targetArea: "Stairs",
-            throwMethod: "Position: A Ramp. Aim: sky reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
+            targetArea: LocalizedText(en: "Stairs", zhHans: "楼梯"),
+            throwMethod: LocalizedText(
+                en: "Position: A Ramp. Aim: sky reference. Throw: jump throw.",
+                zhHans: "站位：A Ramp。瞄点：天空参考点。投掷：跳投。"
+            ),
             difficulty: "Medium",
-            description: "Blocks Stairs for an A execute.",
+            description: LocalizedText(
+                en: "Blocks Stairs for an A execute.",
+                zhHans: "封楼梯，压缩 A 点防守。"
+            ),
+            positionImageName: "mirage_stairs_smoke_position",
+            aimImageName: "mirage_stairs_smoke_aim",
+            resultImageName: "mirage_stairs_smoke_result",
             mapX: 0.57,
             mapY: 0.42
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Market Window Smoke",
+            name: LocalizedText(en: "Market Window Smoke", zhHans: "超市窗口烟"),
             type: .smoke,
             side: "T",
-            startArea: "B Apps",
-            targetArea: "Market Window",
-            throwMethod: "Position: B Apps. Aim: wall reference. Throw: jump throw.",
+            startArea: LocalizedText(en: "B Apps", zhHans: "B 二楼"),
+            targetArea: LocalizedText(en: "Market Window", zhHans: "超市窗口"),
+            throwMethod: LocalizedText(
+                en: "Position: B Apps. Aim: wall reference. Throw: jump throw.",
+                zhHans: "站位：B 二楼。瞄点：墙面参考点。投掷：跳投。"
+            ),
             difficulty: "Medium",
-            description: "Blocks Market Window for a B execute.",
+            description: LocalizedText(
+                en: "Blocks Market Window for a B execute.",
+                zhHans: "封超市窗口，方便进 B 点。"
+            ),
+            positionImageName: "mirage_market_window_smoke_position",
+            aimImageName: "mirage_market_window_smoke_aim",
+            resultImageName: "mirage_market_window_smoke_result",
             mapX: 0.27,
             mapY: 0.31
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "B Short Smoke",
+            name: LocalizedText(en: "B Short Smoke", zhHans: "B 小烟"),
             type: .smoke,
             side: "T",
-            startArea: "B Apps",
-            targetArea: "B Short",
-            throwMethod: "Position: B Apps. Aim: roof line. Throw: left click.",
+            startArea: LocalizedText(en: "B Apps", zhHans: "B 二楼"),
+            targetArea: LocalizedText(en: "B Short", zhHans: "B 小"),
+            throwMethod: LocalizedText(
+                en: "Position: B Apps. Aim: roof line. Throw: left click.",
+                zhHans: "站位：B 二楼。瞄点：屋顶线。投掷：左键投。"
+            ),
             difficulty: "Easy",
-            description: "Blocks Short pressure on a B hit.",
+            description: LocalizedText(
+                en: "Blocks Short pressure on a B hit.",
+                zhHans: "封 B 小，减轻进 B 压力。"
+            ),
+            positionImageName: "mirage_b_short_smoke_position",
+            aimImageName: "mirage_b_short_smoke_aim",
+            resultImageName: "mirage_b_short_smoke_result",
             mapX: 0.35,
             mapY: 0.37
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "A Site Flash",
+            name: LocalizedText(en: "A Site Flash", zhHans: "A 点闪"),
             type: .flash,
             side: "T",
-            startArea: "A Ramp",
-            targetArea: "A Site",
-            throwMethod: "Position: A Ramp. Aim: wall edge. Throw: left click.",
+            startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
+            targetArea: LocalizedText(en: "A Site", zhHans: "A 点"),
+            throwMethod: LocalizedText(
+                en: "Position: A Ramp. Aim: wall edge. Throw: left click.",
+                zhHans: "站位：A Ramp。瞄点：墙边。投掷：左键投。"
+            ),
             difficulty: "Easy",
-            description: "Entry flash for A Site.",
+            description: LocalizedText(
+                en: "Entry flash for A Site.",
+                zhHans: "进 A 点用的突破闪。"
+            ),
+            positionImageName: "mirage_a_site_flash_position",
+            aimImageName: "mirage_a_site_flash_aim",
+            resultImageName: "mirage_a_site_flash_result",
             mapX: 0.53,
             mapY: 0.46
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Ramp Molotov",
+            name: LocalizedText(en: "Ramp Molotov", zhHans: "A Ramp 火"),
             type: .molotov,
             side: "CT",
-            startArea: "A Site",
-            targetArea: "A Ramp",
-            throwMethod: "Position: A Site. Aim: Ramp reference. Throw: left click.",
+            startArea: LocalizedText(en: "A Site", zhHans: "A 点"),
+            targetArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
+            throwMethod: LocalizedText(
+                en: "Position: A Site. Aim: Ramp reference. Throw: left click.",
+                zhHans: "站位：A 点。瞄点：A Ramp 参考点。投掷：左键投。"
+            ),
             difficulty: "Easy",
-            description: "Slows an A Ramp push.",
+            description: LocalizedText(
+                en: "Slows an A Ramp push.",
+                zhHans: "拖住 A Ramp 前压。"
+            ),
+            positionImageName: "mirage_ramp_molotov_position",
+            aimImageName: "mirage_ramp_molotov_aim",
+            resultImageName: "mirage_ramp_molotov_result",
             mapX: 0.50,
             mapY: 0.52
         ),
         UtilityLineup(
             mapName: "Mirage",
-            name: "Default Molotov",
+            name: LocalizedText(en: "Default Molotov", zhHans: "默认包点火"),
             type: .molotov,
             side: "T",
-            startArea: "A Ramp",
-            targetArea: "Default",
-            throwMethod: "Position: A Ramp. Aim: default box. Throw: left click.",
+            startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
+            targetArea: LocalizedText(en: "Default", zhHans: "默认包点"),
+            throwMethod: LocalizedText(
+                en: "Position: A Ramp. Aim: default box. Throw: left click.",
+                zhHans: "站位：A Ramp。瞄点：默认包位箱子。投掷：左键投。"
+            ),
             difficulty: "Easy",
-            description: "Clears Default on A Site.",
+            description: LocalizedText(
+                en: "Clears Default on A Site.",
+                zhHans: "清 A 点默认包位。"
+            ),
+            positionImageName: "mirage_default_molotov_position",
+            aimImageName: "mirage_default_molotov_aim",
+            resultImageName: "mirage_default_molotov_result",
             mapX: 0.60,
             mapY: 0.47
         )
