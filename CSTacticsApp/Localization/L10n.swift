@@ -74,6 +74,7 @@ enum L10n {
         case targetPoints
         case variantStartPoints
         case lineConnections
+        case close
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -231,6 +232,8 @@ enum L10n {
             return "Variant Start Points"
         case .lineConnections:
             return "Line Connections"
+        case .close:
+            return "Close"
         }
     }
 
@@ -380,6 +383,8 @@ enum L10n {
             return "变体站位点"
         case .lineConnections:
             return "站位到目标连线"
+        case .close:
+            return "关闭"
         }
     }
 }
