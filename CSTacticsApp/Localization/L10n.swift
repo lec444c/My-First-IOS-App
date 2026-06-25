@@ -74,6 +74,13 @@ enum L10n {
         case targetPoints
         case variantStartPoints
         case lineConnections
+        case close
+        case search
+        case searchPrompt
+        case searchHint
+        case searchNoResults
+        case searchResultGroup
+        case searchResultVariant
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -231,6 +238,20 @@ enum L10n {
             return "Variant Start Points"
         case .lineConnections:
             return "Line Connections"
+        case .close:
+            return "Close"
+        case .search:
+            return "Search"
+        case .searchPrompt:
+            return "Search utility lineups"
+        case .searchHint:
+            return "Search by utility name, variant, area, type, start position, or target."
+        case .searchNoResults:
+            return "No results found."
+        case .searchResultGroup:
+            return "Lineup Group"
+        case .searchResultVariant:
+            return "Variant"
         }
     }
 
@@ -380,6 +401,20 @@ enum L10n {
             return "变体站位点"
         case .lineConnections:
             return "站位到目标连线"
+        case .close:
+            return "关闭"
+        case .search:
+            return "搜索"
+        case .searchPrompt:
+            return "搜索道具"
+        case .searchHint:
+            return "可搜索道具名称、丢法、区域、类型、站位或目标点。"
+        case .searchNoResults:
+            return "没有找到结果。"
+        case .searchResultGroup:
+            return "道具组"
+        case .searchResultVariant:
+            return "丢法"
         }
     }
 }
