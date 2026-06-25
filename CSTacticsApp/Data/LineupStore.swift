@@ -7,6 +7,7 @@ enum LineupStore {
             name: LocalizedText(en: "Window Smoke", zhHans: "中路窗口烟"),
             type: .smoke,
             side: "T",
+            category: .mid,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "Mid Window", zhHans: "中路窗口"),
             throwMethod: LocalizedText(
@@ -29,6 +30,7 @@ enum LineupStore {
             name: LocalizedText(en: "Connector Smoke", zhHans: "拱门烟"),
             type: .smoke,
             side: "T",
+            category: .mid,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "Connector", zhHans: "拱门"),
             throwMethod: LocalizedText(
@@ -51,6 +53,7 @@ enum LineupStore {
             name: LocalizedText(en: "Jungle Smoke", zhHans: "Jungle 烟"),
             type: .smoke,
             side: "T",
+            category: .aSite,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "Jungle", zhHans: "Jungle"),
             throwMethod: LocalizedText(
@@ -73,6 +76,7 @@ enum LineupStore {
             name: LocalizedText(en: "CT Smoke", zhHans: "CT 烟"),
             type: .smoke,
             side: "T",
+            category: .aSite,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "CT", zhHans: "CT"),
             throwMethod: LocalizedText(
@@ -95,6 +99,7 @@ enum LineupStore {
             name: LocalizedText(en: "Stairs Smoke", zhHans: "楼梯烟"),
             type: .smoke,
             side: "T",
+            category: .aSite,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "Stairs", zhHans: "楼梯"),
             throwMethod: LocalizedText(
@@ -117,6 +122,7 @@ enum LineupStore {
             name: LocalizedText(en: "Market Window Smoke", zhHans: "超市窗口烟"),
             type: .smoke,
             side: "T",
+            category: .bSite,
             startArea: LocalizedText(en: "B Apps", zhHans: "B 二楼"),
             targetArea: LocalizedText(en: "Market Window", zhHans: "超市窗口"),
             throwMethod: LocalizedText(
@@ -139,6 +145,7 @@ enum LineupStore {
             name: LocalizedText(en: "B Short Smoke", zhHans: "B 小烟"),
             type: .smoke,
             side: "T",
+            category: .bSite,
             startArea: LocalizedText(en: "B Apps", zhHans: "B 二楼"),
             targetArea: LocalizedText(en: "B Short", zhHans: "B 小"),
             throwMethod: LocalizedText(
@@ -161,6 +168,7 @@ enum LineupStore {
             name: LocalizedText(en: "A Site Flash", zhHans: "A 点闪"),
             type: .flash,
             side: "T",
+            category: .tSide,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "A Site", zhHans: "A 点"),
             throwMethod: LocalizedText(
@@ -183,6 +191,7 @@ enum LineupStore {
             name: LocalizedText(en: "Ramp Molotov", zhHans: "A Ramp 火"),
             type: .molotov,
             side: "CT",
+            category: .ctSide,
             startArea: LocalizedText(en: "A Site", zhHans: "A 点"),
             targetArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             throwMethod: LocalizedText(
@@ -205,6 +214,7 @@ enum LineupStore {
             name: LocalizedText(en: "Default Molotov", zhHans: "默认包点火"),
             type: .molotov,
             side: "T",
+            category: .aSite,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "Default", zhHans: "默认包点"),
             throwMethod: LocalizedText(

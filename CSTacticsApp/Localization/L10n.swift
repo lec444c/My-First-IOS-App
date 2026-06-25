@@ -9,6 +9,9 @@ enum L10n {
         case followSystem
         case simplifiedChinese
         case english
+        case tacticalMap
+        case utilityList
+        case chooseMirageTool
         case overview
         case name
         case type
@@ -52,6 +55,12 @@ enum L10n {
             return "简体中文"
         case .english:
             return "English"
+        case .tacticalMap:
+            return "2D Tactical Map"
+        case .utilityList:
+            return "Utility List"
+        case .chooseMirageTool:
+            return "Choose how to study Mirage utility."
         case .overview:
             return "Overview"
         case .name:
@@ -103,6 +112,12 @@ enum L10n {
             return "简体中文"
         case .english:
             return "English"
+        case .tacticalMap:
+            return "2D 战术地图"
+        case .utilityList:
+            return "道具列表"
+        case .chooseMirageTool:
+            return "选择学习 Mirage 道具的方式。"
         case .overview:
             return "概览"
         case .name:
