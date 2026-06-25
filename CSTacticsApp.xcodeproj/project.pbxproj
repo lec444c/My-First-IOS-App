@@ -23,6 +23,7 @@
 		A1000000000000000000001D /* DeveloperSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002D /* DeveloperSettings.swift */; };
 		A20000000000000000000010 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000030 /* InfoPlist.strings */; };
 		A30000000000000000000010 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A30000000000000000000020 /* AboutView.swift */; };
+		A40000000000000000000010 /* LineupGroupDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A40000000000000000000020 /* LineupGroupDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		A20000000000000000000020 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		A20000000000000000000021 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		A30000000000000000000020 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		A40000000000000000000020 /* LineupGroupDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineupGroupDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 				A1000000000000000000002B /* MirageDetailView.swift */,
 				A10000000000000000000024 /* TacticalMapView.swift */,
 				A1000000000000000000002C /* UtilityListView.swift */,
+				A40000000000000000000020 /* LineupGroupDetailView.swift */,
 				A10000000000000000000025 /* LineupDetailView.swift */,
 				A1000000000000000000002A /* SettingsView.swift */,
 				A30000000000000000000020 /* AboutView.swift */,
@@ -225,6 +228,7 @@
 				A1000000000000000000001C /* UtilityListView.swift in Sources */,
 				A1000000000000000000001D /* DeveloperSettings.swift in Sources */,
 				A30000000000000000000010 /* AboutView.swift in Sources */,
+				A40000000000000000000010 /* LineupGroupDetailView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

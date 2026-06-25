@@ -9,7 +9,7 @@ struct MirageDetailView: View {
                 NavigationLink {
                     TacticalMapView(
                         mapName: L10n.text(.mirage, for: languageManager),
-                        lineups: LineupStore.mirageLineups
+                        groups: LineupStore.mirageLineupGroups
                     )
                 } label: {
                     Label(
@@ -19,7 +19,7 @@ struct MirageDetailView: View {
                 }
 
                 NavigationLink {
-                    UtilityListView(lineups: LineupStore.mirageLineups)
+                    UtilityListView(groups: LineupStore.mirageLineupGroups)
                 } label: {
                     Label(
                         L10n.text(.utilityList, for: languageManager),
