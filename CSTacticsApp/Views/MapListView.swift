@@ -37,4 +37,5 @@ struct MapListView: View {
 #Preview {
     MapListView()
         .environmentObject(LanguageManager())
+        .environmentObject(FavoriteStore())
 }

@@ -365,7 +365,17 @@ private struct MapCanvas: View {
                 .scaledToFit()
                 .frame(width: containerSize.width, height: containerSize.height)
 
-            if developerModeEnabled {
+            if groups.isEmpty {
+                EmptyStateView(
+                    systemImage: "tray",
+                    title: L10n.text(.emptyUtilities, for: languageManager),
+                    message: L10n.text(.emptyUtilitiesMessage, for: languageManager)
+                )
+                .padding(18)
+                .background(.thinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 12))
+                .padding(20)
+            } else if developerModeEnabled {
                 if showDeveloperLines {
                     ForEach(groups) { group in
                         ForEach(group.variants) { variant in
@@ -1104,5 +1114,6 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         )
         .environmentObject(languageManager)
         .environmentObject(developerSettings)
+        .environmentObject(FavoriteStore())
     }
 }

@@ -81,6 +81,15 @@ enum L10n {
         case searchNoResults
         case searchResultGroup
         case searchResultVariant
+        case favorites
+        case favoriteGroups
+        case favoriteVariants
+        case addFavorite
+        case removeFavorite
+        case emptyFavorites
+        case emptyFavoritesMessage
+        case emptyUtilities
+        case emptyUtilitiesMessage
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -252,6 +261,24 @@ enum L10n {
             return "Lineup Group"
         case .searchResultVariant:
             return "Variant"
+        case .favorites:
+            return "Favorites"
+        case .favoriteGroups:
+            return "Favorite Lineup Groups"
+        case .favoriteVariants:
+            return "Favorite Variants"
+        case .addFavorite:
+            return "Add Favorite"
+        case .removeFavorite:
+            return "Remove Favorite"
+        case .emptyFavorites:
+            return "No favorites yet."
+        case .emptyFavoritesMessage:
+            return "Tap the star on a lineup or variant to save it here."
+        case .emptyUtilities:
+            return "No utilities yet."
+        case .emptyUtilitiesMessage:
+            return "Try another filter or add more local lineup data later."
         }
     }
 
@@ -415,6 +442,24 @@ enum L10n {
             return "道具组"
         case .searchResultVariant:
             return "丢法"
+        case .favorites:
+            return "收藏"
+        case .favoriteGroups:
+            return "收藏道具组"
+        case .favoriteVariants:
+            return "收藏丢法"
+        case .addFavorite:
+            return "添加收藏"
+        case .removeFavorite:
+            return "取消收藏"
+        case .emptyFavorites:
+            return "暂无收藏"
+        case .emptyFavoritesMessage:
+            return "点击道具组或丢法右上角的星标即可收藏。"
+        case .emptyUtilities:
+            return "暂无道具"
+        case .emptyUtilitiesMessage:
+            return "可以切换筛选条件，或后续继续添加本地道具数据。"
         }
     }
 }
