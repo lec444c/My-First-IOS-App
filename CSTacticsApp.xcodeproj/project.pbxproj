@@ -21,6 +21,7 @@
 		A1000000000000000000001B /* MirageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002B /* MirageDetailView.swift */; };
 		A1000000000000000000001C /* UtilityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* UtilityListView.swift */; };
 		A1000000000000000000001D /* DeveloperSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002D /* DeveloperSettings.swift */; };
+		A20000000000000000000010 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000030 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		A1000000000000000000002B /* MirageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirageDetailView.swift; sourceTree = "<group>"; };
 		A1000000000000000000002C /* UtilityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityListView.swift; sourceTree = "<group>"; };
 		A1000000000000000000002D /* DeveloperSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeveloperSettings.swift; sourceTree = "<group>"; };
+		A20000000000000000000020 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A20000000000000000000021 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +71,7 @@
 				A10000000000000000000044 /* Data */,
 				A10000000000000000000046 /* Localization */,
 				A10000000000000000000045 /* Views */,
+				A20000000000000000000030 /* InfoPlist.strings */,
 				A10000000000000000000026 /* Assets.xcassets */,
 			);
 			path = CSTacticsApp;
@@ -162,6 +166,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				"zh-Hans",
 				Base,
 			);
 			mainGroup = A10000000000000000000040;
@@ -180,10 +185,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000016 /* Assets.xcassets in Resources */,
+				A20000000000000000000010 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A20000000000000000000030 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A20000000000000000000020 /* en */,
+				A20000000000000000000021 /* zh-Hans */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A10000000000000000000050 /* Sources */ = {
@@ -335,6 +353,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AimNade;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -364,6 +383,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = AimNade;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
