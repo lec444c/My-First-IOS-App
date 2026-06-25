@@ -51,6 +51,17 @@ enum L10n {
         case jsonCopied
         case startPoint
         case targetPoint
+        case about
+        case appDisplayName
+        case appName
+        case appIntro
+        case creator
+        case creatorName
+        case version
+        case unofficialNotice
+        case unofficialNoticeText
+        case acknowledgements
+        case acknowledgementsText
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -162,6 +173,28 @@ enum L10n {
             return "Start"
         case .targetPoint:
             return "Target"
+        case .about:
+            return "About"
+        case .appDisplayName:
+            return "AimNade"
+        case .appName:
+            return "App Name"
+        case .appIntro:
+            return "AimNade is a 2D tactical utility tool for Counter-Strike players. It helps players learn common lineups through map markers, categorized lists, start position images, aim point images, and result references."
+        case .creator:
+            return "Creator"
+        case .creatorName:
+            return "b1skelA"
+        case .version:
+            return "Version"
+        case .unofficialNotice:
+            return "Unofficial Notice"
+        case .unofficialNoticeText:
+            return "This is an unofficial fan-made tactical tool. It is not affiliated with Valve or Counter-Strike."
+        case .acknowledgements:
+            return "Acknowledgements"
+        case .acknowledgementsText:
+            return "Thanks to the Counter-Strike community for lineup tutorials and tactical knowledge sharing."
         }
     }
 
@@ -265,6 +298,28 @@ enum L10n {
             return "站位"
         case .targetPoint:
             return "目标"
+        case .about:
+            return "关于"
+        case .appDisplayName:
+            return "AimNade"
+        case .appName:
+            return "App 名称"
+        case .appIntro:
+            return "AimNade 是一个面向 CS 玩家制作的 2D 战术道具工具。你可以通过地图点位、分类列表、站位图、瞄点图和落点效果快速学习常用道具。"
+        case .creator:
+            return "制作者"
+        case .creatorName:
+            return "乐扣"
+        case .version:
+            return "版本号"
+        case .unofficialNotice:
+            return "非官方声明"
+        case .unofficialNoticeText:
+            return "本 App 是玩家自制的非官方战术工具，与 Valve 或 Counter-Strike 官方无关。"
+        case .acknowledgements:
+            return "鸣谢"
+        case .acknowledgementsText:
+            return "感谢所有 CS 玩家社区的道具教学与战术分享。"
         }
     }
 }

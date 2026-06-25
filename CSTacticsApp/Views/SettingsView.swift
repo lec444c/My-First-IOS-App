@@ -24,6 +24,17 @@ struct SettingsView: View {
                     isOn: $developerSettings.isDeveloperModeEnabled
                 )
             }
+
+            Section {
+                NavigationLink {
+                    AboutView()
+                } label: {
+                    Label(
+                        L10n.text(.about, for: languageManager),
+                        systemImage: "info.circle"
+                    )
+                }
+            }
         }
         .navigationTitle(L10n.text(.settings, for: languageManager))
     }
