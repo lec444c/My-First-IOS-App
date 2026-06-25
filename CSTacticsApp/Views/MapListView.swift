@@ -7,10 +7,7 @@ struct MapListView: View {
         NavigationStack {
             List {
                 NavigationLink {
-                    TacticalMapView(
-                        mapName: "Mirage",
-                        lineups: LineupStore.mirageLineups
-                    )
+                    MirageDetailView()
                 } label: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Mirage")

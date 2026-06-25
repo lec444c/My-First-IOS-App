@@ -18,6 +18,8 @@
 		A10000000000000000000018 /* LocalizedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000028 /* LocalizedText.swift */; };
 		A10000000000000000000019 /* L10n.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000029 /* L10n.swift */; };
 		A1000000000000000000001A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002A /* SettingsView.swift */; };
+		A1000000000000000000001B /* MirageDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002B /* MirageDetailView.swift */; };
+		A1000000000000000000001C /* UtilityListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000002C /* UtilityListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +35,8 @@
 		A10000000000000000000028 /* LocalizedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedText.swift; sourceTree = "<group>"; };
 		A10000000000000000000029 /* L10n.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = L10n.swift; sourceTree = "<group>"; };
 		A1000000000000000000002A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A1000000000000000000002B /* MirageDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MirageDetailView.swift; sourceTree = "<group>"; };
+		A1000000000000000000002C /* UtilityListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityListView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,7 +99,9 @@
 			isa = PBXGroup;
 			children = (
 				A10000000000000000000023 /* MapListView.swift */,
+				A1000000000000000000002B /* MirageDetailView.swift */,
 				A10000000000000000000024 /* TacticalMapView.swift */,
+				A1000000000000000000002C /* UtilityListView.swift */,
 				A10000000000000000000025 /* LineupDetailView.swift */,
 				A1000000000000000000002A /* SettingsView.swift */,
 			);
@@ -191,6 +197,8 @@
 				A10000000000000000000018 /* LocalizedText.swift in Sources */,
 				A10000000000000000000019 /* L10n.swift in Sources */,
 				A1000000000000000000001A /* SettingsView.swift in Sources */,
+				A1000000000000000000001B /* MirageDetailView.swift in Sources */,
+				A1000000000000000000001C /* UtilityListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
