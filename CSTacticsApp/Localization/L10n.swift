@@ -114,21 +114,21 @@ enum L10n {
         case .difficulty:
             return "难度"
         case .images:
-            return "图片"
+            return "教学图片"
         case .startPosition:
             return "站位图"
         case .aimPoint:
             return "瞄点图"
         case .result:
-            return "效果图"
+            return "落点效果"
         case .placeholder:
-            return "Placeholder"
+            return "暂无图片"
         case .position:
             return "位置"
         case .startArea:
-            return "站位"
+            return "起始位置"
         case .targetArea:
-            return "目标点"
+            return "目标位置"
         case .throwMethod:
             return "投掷方式"
         case .description:
