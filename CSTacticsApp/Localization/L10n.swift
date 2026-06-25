@@ -62,6 +62,11 @@ enum L10n {
         case unofficialNoticeText
         case acknowledgements
         case acknowledgementsText
+        case mapFilterArea
+        case mapFilterUtilityType
+        case mapFilterFeatured
+        case mapFilterAll
+        case clusteredUtilities
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -195,6 +200,16 @@ enum L10n {
             return "Acknowledgements"
         case .acknowledgementsText:
             return "Thanks to the Counter-Strike community for lineup tutorials and tactical knowledge sharing."
+        case .mapFilterArea:
+            return "Area"
+        case .mapFilterUtilityType:
+            return "Utility Type"
+        case .mapFilterFeatured:
+            return "Featured"
+        case .mapFilterAll:
+            return "All"
+        case .clusteredUtilities:
+            return "Utilities"
         }
     }
 
@@ -320,6 +335,16 @@ enum L10n {
             return "鸣谢"
         case .acknowledgementsText:
             return "感谢所有 CS 玩家社区的道具教学与战术分享。"
+        case .mapFilterArea:
+            return "区域"
+        case .mapFilterUtilityType:
+            return "道具类型"
+        case .mapFilterFeatured:
+            return "推荐"
+        case .mapFilterAll:
+            return "全部"
+        case .clusteredUtilities:
+            return "道具"
         }
     }
 }

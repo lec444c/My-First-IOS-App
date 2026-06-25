@@ -8,6 +8,7 @@ enum LineupStore {
             type: .smoke,
             side: "T",
             category: .mid,
+            isFeatured: true,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "Mid Window", zhHans: "中路窗口"),
             throwMethod: LocalizedText(
@@ -33,6 +34,7 @@ enum LineupStore {
             type: .smoke,
             side: "T",
             category: .mid,
+            isFeatured: true,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "Connector", zhHans: "拱门"),
             throwMethod: LocalizedText(
@@ -58,6 +60,7 @@ enum LineupStore {
             type: .smoke,
             side: "T",
             category: .aSite,
+            isFeatured: true,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "Jungle", zhHans: "Jungle"),
             throwMethod: LocalizedText(
@@ -83,6 +86,7 @@ enum LineupStore {
             type: .smoke,
             side: "T",
             category: .aSite,
+            isFeatured: true,
             startArea: LocalizedText(en: "T Spawn", zhHans: "匪家"),
             targetArea: LocalizedText(en: "CT", zhHans: "CT"),
             throwMethod: LocalizedText(
@@ -183,6 +187,7 @@ enum LineupStore {
             type: .flash,
             side: "T",
             category: .tSide,
+            isFeatured: true,
             startArea: LocalizedText(en: "A Ramp", zhHans: "A Ramp"),
             targetArea: LocalizedText(en: "A Site", zhHans: "A 点"),
             throwMethod: LocalizedText(
