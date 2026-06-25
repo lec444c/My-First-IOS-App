@@ -22,8 +22,10 @@ enum LineupStore {
             positionImageName: "mirage_window_smoke_position",
             aimImageName: "mirage_window_smoke_aim",
             resultImageName: "mirage_window_smoke_result",
-            mapX: 0.46,
-            mapY: 0.31
+            startMapX: 0.46,
+            startMapY: 0.31,
+            targetMapX: 0.46,
+            targetMapY: 0.36
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -45,8 +47,10 @@ enum LineupStore {
             positionImageName: "mirage_connector_smoke_position",
             aimImageName: "mirage_connector_smoke_aim",
             resultImageName: "mirage_connector_smoke_result",
-            mapX: 0.52,
-            mapY: 0.40
+            startMapX: 0.52,
+            startMapY: 0.40,
+            targetMapX: 0.48,
+            targetMapY: 0.47
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -68,8 +72,10 @@ enum LineupStore {
             positionImageName: "mirage_jungle_smoke_position",
             aimImageName: "mirage_jungle_smoke_aim",
             resultImageName: "mirage_jungle_smoke_result",
-            mapX: 0.58,
-            mapY: 0.35
+            startMapX: 0.58,
+            startMapY: 0.35,
+            targetMapX: 0.42,
+            targetMapY: 0.62
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -91,8 +97,10 @@ enum LineupStore {
             positionImageName: "mirage_ct_smoke_position",
             aimImageName: "mirage_ct_smoke_aim",
             resultImageName: "mirage_ct_smoke_result",
-            mapX: 0.63,
-            mapY: 0.37
+            startMapX: 0.63,
+            startMapY: 0.37,
+            targetMapX: 0.69,
+            targetMapY: 0.50
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -114,8 +122,10 @@ enum LineupStore {
             positionImageName: "mirage_stairs_smoke_position",
             aimImageName: "mirage_stairs_smoke_aim",
             resultImageName: "mirage_stairs_smoke_result",
-            mapX: 0.57,
-            mapY: 0.42
+            startMapX: 0.57,
+            startMapY: 0.42,
+            targetMapX: 0.57,
+            targetMapY: 0.57
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -137,8 +147,10 @@ enum LineupStore {
             positionImageName: "mirage_market_window_smoke_position",
             aimImageName: "mirage_market_window_smoke_aim",
             resultImageName: "mirage_market_window_smoke_result",
-            mapX: 0.27,
-            mapY: 0.31
+            startMapX: 0.27,
+            startMapY: 0.31,
+            targetMapX: 0.21,
+            targetMapY: 0.45
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -160,8 +172,10 @@ enum LineupStore {
             positionImageName: "mirage_b_short_smoke_position",
             aimImageName: "mirage_b_short_smoke_aim",
             resultImageName: "mirage_b_short_smoke_result",
-            mapX: 0.35,
-            mapY: 0.37
+            startMapX: 0.35,
+            startMapY: 0.37,
+            targetMapX: 0.50,
+            targetMapY: 0.40
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -183,8 +197,10 @@ enum LineupStore {
             positionImageName: "mirage_a_site_flash_position",
             aimImageName: "mirage_a_site_flash_aim",
             resultImageName: "mirage_a_site_flash_result",
-            mapX: 0.53,
-            mapY: 0.46
+            startMapX: 0.53,
+            startMapY: 0.46,
+            targetMapX: 0.62,
+            targetMapY: 0.58
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -206,8 +222,10 @@ enum LineupStore {
             positionImageName: "mirage_ramp_molotov_position",
             aimImageName: "mirage_ramp_molotov_aim",
             resultImageName: "mirage_ramp_molotov_result",
-            mapX: 0.50,
-            mapY: 0.52
+            startMapX: 0.50,
+            startMapY: 0.52,
+            targetMapX: 0.56,
+            targetMapY: 0.82
         ),
         UtilityLineup(
             mapName: "Mirage",
@@ -229,8 +247,10 @@ enum LineupStore {
             positionImageName: "mirage_default_molotov_position",
             aimImageName: "mirage_default_molotov_aim",
             resultImageName: "mirage_default_molotov_result",
-            mapX: 0.60,
-            mapY: 0.47
+            startMapX: 0.60,
+            startMapY: 0.47,
+            targetMapX: 0.58,
+            targetMapY: 0.75
         )
     ]
 }

@@ -16,8 +16,100 @@ struct UtilityLineup: Identifiable, Hashable {
     let positionImageName: String
     let aimImageName: String
     let resultImageName: String
-    let mapX: Double
-    let mapY: Double
+    let startMapX: Double
+    let startMapY: Double
+    let targetMapX: Double?
+    let targetMapY: Double?
+
+    init(
+        mapName: String,
+        name: LocalizedText,
+        type: UtilityType,
+        side: String,
+        category: LineupCategory,
+        startArea: LocalizedText,
+        targetArea: LocalizedText,
+        throwMethod: LocalizedText,
+        difficulty: String,
+        description: LocalizedText,
+        positionImageName: String,
+        aimImageName: String,
+        resultImageName: String,
+        startMapX: Double,
+        startMapY: Double,
+        targetMapX: Double? = nil,
+        targetMapY: Double? = nil
+    ) {
+        self.mapName = mapName
+        self.name = name
+        self.type = type
+        self.side = side
+        self.category = category
+        self.startArea = startArea
+        self.targetArea = targetArea
+        self.throwMethod = throwMethod
+        self.difficulty = difficulty
+        self.description = description
+        self.positionImageName = positionImageName
+        self.aimImageName = aimImageName
+        self.resultImageName = resultImageName
+        self.startMapX = startMapX
+        self.startMapY = startMapY
+        self.targetMapX = targetMapX
+        self.targetMapY = targetMapY
+    }
+
+    init(
+        mapName: String,
+        name: LocalizedText,
+        type: UtilityType,
+        side: String,
+        category: LineupCategory,
+        startArea: LocalizedText,
+        targetArea: LocalizedText,
+        throwMethod: LocalizedText,
+        difficulty: String,
+        description: LocalizedText,
+        positionImageName: String,
+        aimImageName: String,
+        resultImageName: String,
+        mapX: Double,
+        mapY: Double
+    ) {
+        self.init(
+            mapName: mapName,
+            name: name,
+            type: type,
+            side: side,
+            category: category,
+            startArea: startArea,
+            targetArea: targetArea,
+            throwMethod: throwMethod,
+            difficulty: difficulty,
+            description: description,
+            positionImageName: positionImageName,
+            aimImageName: aimImageName,
+            resultImageName: resultImageName,
+            startMapX: mapX,
+            startMapY: mapY
+        )
+    }
+
+    var targetCoordinate: CGPoint? {
+        guard let targetMapX, let targetMapY else {
+            return nil
+        }
+
+        return CGPoint(x: targetMapX, y: targetMapY)
+    }
+
+    var mapX: Double {
+        startMapX
+    }
+
+    var mapY: Double {
+        startMapY
+    }
 
     func difficultyDisplayName(for languageManager: LanguageManager) -> String {
         switch difficulty {

@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var developerSettings: DeveloperSettings
 
     var body: some View {
         Form {
@@ -16,6 +17,13 @@ struct SettingsView: View {
                 Text(L10n.text(.english, for: languageManager))
                     .tag(AppLanguage.en)
             }
+
+            Section {
+                Toggle(
+                    L10n.text(.developerMode, for: languageManager),
+                    isOn: $developerSettings.isDeveloperModeEnabled
+                )
+            }
         }
         .navigationTitle(L10n.text(.settings, for: languageManager))
     }
@@ -25,5 +33,6 @@ struct SettingsView: View {
     NavigationStack {
         SettingsView()
             .environmentObject(LanguageManager())
+            .environmentObject(DeveloperSettings())
     }
 }

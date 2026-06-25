@@ -40,6 +40,17 @@ enum L10n {
         case throwMethod
         case description
         case tapUtilityHint
+        case developerMode
+        case developerMapHint
+        case liveCoordinates
+        case lastEditedCoordinate
+        case noEditedCoordinate
+        case copyCoordinates
+        case copyJSON
+        case coordinatesCopied
+        case jsonCopied
+        case startPoint
+        case targetPoint
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -129,6 +140,28 @@ enum L10n {
             return "Description"
         case .tapUtilityHint:
             return "Tap a utility point to view details."
+        case .developerMode:
+            return "Developer Mode"
+        case .developerMapHint:
+            return "Drag utility points to adjust map coordinates."
+        case .liveCoordinates:
+            return "Live Coordinates"
+        case .lastEditedCoordinate:
+            return "Last Edited"
+        case .noEditedCoordinate:
+            return "No edited coordinate yet."
+        case .copyCoordinates:
+            return "Copy Coordinates"
+        case .copyJSON:
+            return "Copy JSON"
+        case .coordinatesCopied:
+            return "Coordinates copied."
+        case .jsonCopied:
+            return "JSON copied."
+        case .startPoint:
+            return "Start"
+        case .targetPoint:
+            return "Target"
         }
     }
 
@@ -210,6 +243,28 @@ enum L10n {
             return "说明"
         case .tapUtilityHint:
             return "点击道具点查看详情。"
+        case .developerMode:
+            return "开发者模式"
+        case .developerMapHint:
+            return "拖动道具点调整地图坐标。"
+        case .liveCoordinates:
+            return "实时坐标"
+        case .lastEditedCoordinate:
+            return "最近调整"
+        case .noEditedCoordinate:
+            return "还没有调整点位。"
+        case .copyCoordinates:
+            return "复制坐标"
+        case .copyJSON:
+            return "复制 JSON"
+        case .coordinatesCopied:
+            return "坐标已复制。"
+        case .jsonCopied:
+            return "JSON 已复制。"
+        case .startPoint:
+            return "站位"
+        case .targetPoint:
+            return "目标"
         }
     }
 }
