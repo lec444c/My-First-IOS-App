@@ -46,6 +46,17 @@ CSTacticsApp 支持 English 和简体中文。用户选择语言由 `LanguageMan
 - `targetArea`: 目标位置 / Target Area
 - `throwMethod`: 投掷方式 / Throw Method
 - `description`: 说明 / Description
+- `developerMode`: 开发者模式 / Developer Mode
+- `developerMapHint`: 拖动道具点调整地图坐标。 / Drag utility points to adjust map coordinates.
+- `liveCoordinates`: 实时坐标 / Live Coordinates
+- `lastEditedCoordinate`: 最近调整 / Last Edited
+- `noEditedCoordinate`: 还没有调整点位。 / No edited coordinate yet.
+- `copyCoordinates`: 复制坐标 / Copy Coordinates
+- `copyJSON`: 复制 JSON / Copy JSON
+- `coordinatesCopied`: 坐标已复制。 / Coordinates copied.
+- `jsonCopied`: JSON 已复制。 / JSON copied.
+- `startPoint`: 站位 / Start
+- `targetPoint`: 目标 / Target
 
 ## 检查方式
 
