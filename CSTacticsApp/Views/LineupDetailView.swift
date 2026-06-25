@@ -3,6 +3,7 @@ import UIKit
 
 struct LineupDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var favoriteStore: FavoriteStore
     @State private var isImagePreviewPresented = false
     @State private var selectedImageIndex = 0
 
@@ -24,6 +25,10 @@ struct LineupDetailView: View {
                 imageName: variant.resultImageName
             )
         ]
+    }
+
+    private var isFavorite: Bool {
+        favoriteStore.isFavoriteVariant(variant)
     }
 
     var body: some View {
@@ -67,6 +72,18 @@ struct LineupDetailView: View {
         }
         .navigationTitle(variant.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    favoriteStore.toggleVariant(variant)
+                } label: {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                }
+                .accessibilityLabel(
+                    L10n.text(isFavorite ? .removeFavorite : .addFavorite, for: languageManager)
+                )
+            }
+        }
         .fullScreenCover(isPresented: $isImagePreviewPresented) {
             LineupImagePreviewView(
                 items: teachingImages,
@@ -118,9 +135,13 @@ private struct TeachingImageCard: View {
                             .fill(Color(.systemGray5))
                             .frame(height: 150)
                             .overlay {
-                                Text(placeholderText)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
+                                VStack(spacing: 8) {
+                                    Image(systemName: "photo")
+                                        .font(.title2)
+                                    Text(placeholderText)
+                                        .font(.subheadline)
+                                }
+                                .foregroundStyle(.secondary)
                             }
                     }
                 }
@@ -363,5 +384,6 @@ private struct ZoomableImageView: UIViewRepresentable {
     NavigationStack {
         LineupDetailView(group: group, variant: group.variants[0])
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }

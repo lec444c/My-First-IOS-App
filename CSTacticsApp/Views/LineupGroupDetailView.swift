@@ -2,8 +2,13 @@ import SwiftUI
 
 struct LineupGroupDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var favoriteStore: FavoriteStore
 
     let group: LineupGroup
+
+    private var isFavorite: Bool {
+        favoriteStore.isFavoriteGroup(group)
+    }
 
     var body: some View {
         List {
@@ -22,12 +27,25 @@ struct LineupGroupDetailView: View {
                     } label: {
                         VariantCard(group: group, variant: variant)
                             .environmentObject(languageManager)
+                            .environmentObject(favoriteStore)
                     }
                 }
             }
         }
         .navigationTitle(group.targetName.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    favoriteStore.toggleGroup(group)
+                } label: {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                }
+                .accessibilityLabel(
+                    L10n.text(isFavorite ? .removeFavorite : .addFavorite, for: languageManager)
+                )
+            }
+        }
     }
 
     private func detailRow(_ title: String, _ value: String) -> some View {
@@ -43,9 +61,14 @@ struct LineupGroupDetailView: View {
 
 private struct VariantCard: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var favoriteStore: FavoriteStore
 
     let group: LineupGroup
     let variant: LineupVariant
+
+    private var isFavorite: Bool {
+        favoriteStore.isFavoriteVariant(variant)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -63,6 +86,14 @@ private struct VariantCard: View {
                     Text(variant.difficultyDisplayName(for: languageManager))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                if isFavorite {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .accessibilityLabel(L10n.text(.favorites, for: languageManager))
                 }
             }
 
@@ -93,5 +124,6 @@ private struct VariantCard: View {
     NavigationStack {
         LineupGroupDetailView(group: LineupStore.mirageLineupGroups[0])
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }

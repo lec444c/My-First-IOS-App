@@ -16,8 +16,10 @@ struct LineupSearchView: View {
                 Text(L10n.text(.searchHint, for: languageManager))
                     .foregroundStyle(.secondary)
             } else if results.isEmpty {
-                Text(L10n.text(.searchNoResults, for: languageManager))
-                    .foregroundStyle(.secondary)
+                EmptyStateView(
+                    systemImage: "magnifyingglass",
+                    title: L10n.text(.searchNoResults, for: languageManager)
+                )
             } else {
                 ForEach(results) { result in
                     NavigationLink {
@@ -246,5 +248,6 @@ private extension LineupCategory {
     NavigationStack {
         LineupSearchView(groups: LineupStore.mirageLineupGroups)
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }

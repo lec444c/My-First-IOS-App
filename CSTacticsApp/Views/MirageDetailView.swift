@@ -35,6 +35,15 @@ struct MirageDetailView: View {
                         systemImage: "magnifyingglass"
                     )
                 }
+
+                NavigationLink {
+                    FavoritesView(groups: LineupStore.mirageLineupGroups)
+                } label: {
+                    Label(
+                        L10n.text(.favorites, for: languageManager),
+                        systemImage: "star"
+                    )
+                }
             } header: {
                 Text(L10n.text(.mirage, for: languageManager))
             } footer: {
@@ -49,5 +58,6 @@ struct MirageDetailView: View {
     NavigationStack {
         MirageDetailView()
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }
