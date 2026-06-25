@@ -3,26 +3,29 @@ import SwiftUI
 struct UtilityListView: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
-    let lineups: [UtilityLineup]
+    let groups: [LineupGroup]
 
     var body: some View {
         List {
             ForEach(LineupCategory.allCases, id: \.self) { category in
-                let categoryLineups = lineups.filter { lineup in
-                    lineup.category == category
+                let categoryGroups = groups.filter { group in
+                    group.category == category
                 }
 
-                if !categoryLineups.isEmpty {
+                if !categoryGroups.isEmpty {
                     Section(category.displayName(for: languageManager)) {
-                        ForEach(categoryLineups) { lineup in
+                        ForEach(categoryGroups) { group in
                             NavigationLink {
-                                LineupDetailView(lineup: lineup)
+                                LineupGroupDetailView(group: group)
                             } label: {
                                 VStack(alignment: .leading, spacing: 4) {
-                                    Text(lineup.name.value(for: languageManager))
+                                    Text(group.targetName.value(for: languageManager))
                                         .font(.headline)
-                                    Text(lineup.type.displayName(for: languageManager))
+                                    Text(group.type.displayName(for: languageManager))
                                         .font(.subheadline)
+                                        .foregroundStyle(.secondary)
+                                    Text(L10n.text(.variantCount(group.variants.count), for: languageManager))
+                                        .font(.caption)
                                         .foregroundStyle(.secondary)
                                 }
                                 .padding(.vertical, 2)
@@ -38,7 +41,7 @@ struct UtilityListView: View {
 
 #Preview {
     NavigationStack {
-        UtilityListView(lineups: LineupStore.mirageLineups)
+        UtilityListView(groups: LineupStore.mirageLineupGroups)
             .environmentObject(LanguageManager())
     }
 }
