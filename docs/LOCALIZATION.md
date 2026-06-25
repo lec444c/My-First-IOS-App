@@ -57,6 +57,17 @@ CSTacticsApp 支持 English 和简体中文。用户选择语言由 `LanguageMan
 - `jsonCopied`: JSON 已复制。 / JSON copied.
 - `startPoint`: 站位 / Start
 - `targetPoint`: 目标 / Target
+- `about`: 关于 / About
+- `appDisplayName`: AimNade / AimNade
+- `appName`: App 名称 / App Name
+- `appIntro`: App 简介文案
+- `creator`: 制作者 / Creator
+- `creatorName`: 乐扣 / b1skelA
+- `version`: 版本号 / Version
+- `unofficialNotice`: 非官方声明 / Unofficial Notice
+- `unofficialNoticeText`: 非官方声明文案
+- `acknowledgements`: 鸣谢 / Acknowledgements
+- `acknowledgementsText`: 鸣谢文案
 
 ## 检查方式
 
