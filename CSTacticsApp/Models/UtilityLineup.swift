@@ -4,14 +4,14 @@ import SwiftUI
 struct UtilityLineup: Identifiable, Hashable {
     let id = UUID()
     let mapName: String
-    let name: String
+    let name: LocalizedText
     let type: UtilityType
     let side: String
-    let startArea: String
-    let targetArea: String
-    let throwMethod: String
+    let startArea: LocalizedText
+    let targetArea: LocalizedText
+    let throwMethod: LocalizedText
     let difficulty: String
-    let description: String
+    let description: LocalizedText
     let mapX: Double
     let mapY: Double
 }
@@ -45,6 +45,24 @@ enum UtilityType: String, CaseIterable, Hashable {
             return .orange
         case .he:
             return .red
+        }
+    }
+
+    func displayName(for languageManager: LanguageManager) -> String {
+        switch languageManager.contentLanguage {
+        case .system, .en:
+            return rawValue
+        case .zhHans:
+            switch self {
+            case .smoke:
+                return "烟"
+            case .flash:
+                return "闪"
+            case .molotov:
+                return "火"
+            case .he:
+                return "雷"
+            }
         }
     }
 }

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MapListView: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
     var body: some View {
         NavigationStack {
             List {
@@ -13,18 +15,29 @@ struct MapListView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Mirage")
                             .font(.headline)
-                        Text("\(LineupStore.mirageLineups.count) utility lineups")
+                        Text(L10n.text(.lineupCount(LineupStore.mirageLineups.count), for: languageManager))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
                     .padding(.vertical, 4)
                 }
             }
-            .navigationTitle("Maps")
+            .navigationTitle(L10n.text(.mapsTitle, for: languageManager))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink {
+                        SettingsView()
+                    } label: {
+                        Image(systemName: "gearshape")
+                    }
+                    .accessibilityLabel(L10n.text(.settingsTitle, for: languageManager))
+                }
+            }
         }
     }
 }
 
 #Preview {
     MapListView()
+        .environmentObject(LanguageManager())
 }

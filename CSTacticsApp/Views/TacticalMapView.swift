@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct TacticalMapView: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
     let mapName: String
     let lineups: [UtilityLineup]
 
@@ -35,7 +37,7 @@ struct TacticalMapView: View {
                             .stroke(.secondary.opacity(0.35), lineWidth: 1)
                     }
 
-                    Text("Tap a utility point to view details.")
+                    Text(L10n.text(.tapUtilityHint, for: languageManager))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -49,6 +51,8 @@ struct TacticalMapView: View {
 }
 
 private struct UtilityPoint: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
     let lineup: UtilityLineup
 
     var body: some View {
@@ -63,7 +67,7 @@ private struct UtilityPoint: View {
                     .stroke(.white, lineWidth: 2)
             }
             .shadow(radius: 3)
-            .accessibilityLabel("\(lineup.name), \(lineup.type.rawValue)")
+            .accessibilityLabel("\(lineup.name.value(for: languageManager)), \(lineup.type.displayName(for: languageManager))")
     }
 }
 
@@ -113,5 +117,6 @@ private struct PlaceholderMirageMap: View {
             mapName: "Mirage",
             lineups: LineupStore.mirageLineups
         )
+        .environmentObject(LanguageManager())
     }
 }
