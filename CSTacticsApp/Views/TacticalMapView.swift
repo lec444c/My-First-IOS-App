@@ -15,7 +15,10 @@ struct TacticalMapView: View {
             ScrollView {
                 VStack(spacing: 16) {
                     ZStack {
-                        PlaceholderMirageMap()
+                        Image("mirage_map")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: mapSide, height: mapSide)
 
                         ForEach(lineups) { lineup in
                             NavigationLink {
@@ -68,46 +71,6 @@ private struct UtilityPoint: View {
             }
             .shadow(radius: 3)
             .accessibilityLabel("\(lineup.name.value(for: languageManager)), \(lineup.type.displayName(for: languageManager))")
-    }
-}
-
-private struct PlaceholderMirageMap: View {
-    var body: some View {
-        GeometryReader { geometry in
-            let width = geometry.size.width
-            let height = geometry.size.height
-
-            ZStack {
-                Color(.secondarySystemBackground)
-
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(.orange.opacity(0.18))
-                    .frame(width: width * 0.46, height: height * 0.32)
-                    .position(x: width * 0.67, y: height * 0.70)
-
-                RoundedRectangle(cornerRadius: 24)
-                    .fill(.blue.opacity(0.18))
-                    .frame(width: width * 0.42, height: height * 0.32)
-                    .position(x: width * 0.33, y: height * 0.34)
-
-                Capsule()
-                    .fill(.green.opacity(0.18))
-                    .frame(width: width * 0.22, height: height * 0.64)
-                    .rotationEffect(.degrees(30))
-                    .position(x: width * 0.52, y: height * 0.50)
-
-                mapLabel("A", x: width * 0.68, y: height * 0.70)
-                mapLabel("B", x: width * 0.32, y: height * 0.34)
-                mapLabel("MID", x: width * 0.52, y: height * 0.50)
-            }
-        }
-    }
-
-    private func mapLabel(_ text: String, x: CGFloat, y: CGFloat) -> some View {
-        Text(text)
-            .font(.caption.bold())
-            .foregroundStyle(.secondary)
-            .position(x: x, y: y)
     }
 }
 
