@@ -4,32 +4,35 @@ import UIKit
 struct LineupDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
-    let lineup: UtilityLineup
+    let group: LineupGroup
+    let variant: LineupVariant
 
     var body: some View {
         List {
             Section(L10n.text(.overview, for: languageManager)) {
-                detailRow(L10n.text(.name, for: languageManager), lineup.name.value(for: languageManager))
-                detailRow(L10n.text(.type, for: languageManager), lineup.type.displayName(for: languageManager))
-                detailRow(L10n.text(.side, for: languageManager), lineup.side)
-                detailRow(L10n.text(.difficulty, for: languageManager), lineup.difficultyDisplayName(for: languageManager))
+                detailRow(L10n.text(.name, for: languageManager), variant.name.value(for: languageManager))
+                detailRow(L10n.text(.targetArea, for: languageManager), group.targetName.value(for: languageManager))
+                detailRow(L10n.text(.type, for: languageManager), group.type.displayName(for: languageManager))
+                detailRow(L10n.text(.side, for: languageManager), group.side)
+                detailRow(L10n.text(.difficulty, for: languageManager), variant.difficultyDisplayName(for: languageManager))
+                detailRow(L10n.text(.spawnRequirement, for: languageManager), variant.spawnRequirement.value(for: languageManager))
             }
 
             Section(L10n.text(.teachingImages, for: languageManager)) {
                 VStack(spacing: 12) {
                     TeachingImageCard(
                         title: L10n.text(.startPosition, for: languageManager),
-                        imageName: lineup.positionImageName,
+                        imageName: variant.positionImageName,
                         placeholderText: L10n.text(.placeholder, for: languageManager)
                     )
                     TeachingImageCard(
                         title: L10n.text(.aimPoint, for: languageManager),
-                        imageName: lineup.aimImageName,
+                        imageName: variant.aimImageName,
                         placeholderText: L10n.text(.placeholder, for: languageManager)
                     )
                     TeachingImageCard(
                         title: L10n.text(.result, for: languageManager),
-                        imageName: lineup.resultImageName,
+                        imageName: variant.resultImageName,
                         placeholderText: L10n.text(.placeholder, for: languageManager)
                     )
                 }
@@ -37,19 +40,19 @@ struct LineupDetailView: View {
             }
 
             Section(L10n.text(.position, for: languageManager)) {
-                detailRow(L10n.text(.startArea, for: languageManager), lineup.startArea.value(for: languageManager))
-                detailRow(L10n.text(.targetArea, for: languageManager), lineup.targetArea.value(for: languageManager))
+                detailRow(L10n.text(.startArea, for: languageManager), variant.startArea.value(for: languageManager))
+                detailRow(L10n.text(.targetArea, for: languageManager), group.targetName.value(for: languageManager))
             }
 
             Section(L10n.text(.throwMethod, for: languageManager)) {
-                Text(lineup.throwMethod.value(for: languageManager))
+                Text(variant.throwMethod.value(for: languageManager))
             }
 
             Section(L10n.text(.description, for: languageManager)) {
-                Text(lineup.description.value(for: languageManager))
+                Text(variant.description.value(for: languageManager))
             }
         }
-        .navigationTitle(lineup.name.value(for: languageManager))
+        .navigationTitle(variant.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
     }
 
@@ -100,8 +103,10 @@ private struct TeachingImageCard: View {
 }
 
 #Preview {
+    let group = LineupStore.mirageLineupGroups[0]
+
     NavigationStack {
-        LineupDetailView(lineup: LineupStore.mirageLineups[0])
+        LineupDetailView(group: group, variant: group.variants[0])
             .environmentObject(LanguageManager())
     }
 }

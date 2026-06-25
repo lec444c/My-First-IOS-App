@@ -12,7 +12,7 @@ struct MapListView: View {
                     VStack(alignment: .leading, spacing: 4) {
                         Text(L10n.text(.mirage, for: languageManager))
                             .font(.headline)
-                        Text(L10n.text(.lineupCount(LineupStore.mirageLineups.count), for: languageManager))
+                        Text(L10n.text(.lineupCount(LineupStore.mirageLineupGroups.count), for: languageManager))
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
