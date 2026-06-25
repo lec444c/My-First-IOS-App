@@ -2,22 +2,34 @@ import Foundation
 
 enum L10n {
     enum Key {
-        case mapsTitle
+        case maps
+        case mirage
         case lineupCount(Int)
-        case settingsTitle
+        case settings
         case language
         case followSystem
         case simplifiedChinese
         case english
-        case tacticalMap
+        case tacticalMap2D
         case utilityList
         case chooseMirageTool
+        case categoryASite
+        case categoryBSite
+        case categoryMid
+        case categoryTSide
+        case categoryCTSide
+        case smoke
+        case flash
+        case molotov
+        case he
+        case difficultyEasy
+        case difficultyMedium
         case overview
         case name
         case type
         case side
         case difficulty
-        case images
+        case teachingImages
         case startPosition
         case aimPoint
         case result
@@ -41,11 +53,13 @@ enum L10n {
 
     private static func englishText(_ key: Key) -> String {
         switch key {
-        case .mapsTitle:
+        case .maps:
             return "Maps"
+        case .mirage:
+            return "Mirage"
         case .lineupCount(let count):
             return "\(count) utility lineups"
-        case .settingsTitle:
+        case .settings:
             return "Settings"
         case .language:
             return "Language"
@@ -55,12 +69,34 @@ enum L10n {
             return "简体中文"
         case .english:
             return "English"
-        case .tacticalMap:
+        case .tacticalMap2D:
             return "2D Tactical Map"
         case .utilityList:
             return "Utility List"
         case .chooseMirageTool:
             return "Choose how to study Mirage utility."
+        case .categoryASite:
+            return "A Site"
+        case .categoryBSite:
+            return "B Site"
+        case .categoryMid:
+            return "Mid"
+        case .categoryTSide:
+            return "T Side"
+        case .categoryCTSide:
+            return "CT Side"
+        case .smoke:
+            return "Smoke"
+        case .flash:
+            return "Flash"
+        case .molotov:
+            return "Molotov"
+        case .he:
+            return "HE"
+        case .difficultyEasy:
+            return "Easy"
+        case .difficultyMedium:
+            return "Medium"
         case .overview:
             return "Overview"
         case .name:
@@ -71,8 +107,8 @@ enum L10n {
             return "Side"
         case .difficulty:
             return "Difficulty"
-        case .images:
-            return "Images"
+        case .teachingImages:
+            return "Teaching Images"
         case .startPosition:
             return "Start Position"
         case .aimPoint:
@@ -98,11 +134,13 @@ enum L10n {
 
     private static func chineseText(_ key: Key) -> String {
         switch key {
-        case .mapsTitle:
+        case .maps:
             return "地图"
+        case .mirage:
+            return "Mirage"
         case .lineupCount(let count):
             return "\(count) 个道具点位"
-        case .settingsTitle:
+        case .settings:
             return "设置"
         case .language:
             return "语言"
@@ -112,12 +150,34 @@ enum L10n {
             return "简体中文"
         case .english:
             return "English"
-        case .tacticalMap:
+        case .tacticalMap2D:
             return "2D 战术地图"
         case .utilityList:
             return "道具列表"
         case .chooseMirageTool:
             return "选择学习 Mirage 道具的方式。"
+        case .categoryASite:
+            return "A 包点"
+        case .categoryBSite:
+            return "B 包点"
+        case .categoryMid:
+            return "中路"
+        case .categoryTSide:
+            return "T 方"
+        case .categoryCTSide:
+            return "CT 方"
+        case .smoke:
+            return "烟"
+        case .flash:
+            return "闪"
+        case .molotov:
+            return "火"
+        case .he:
+            return "雷"
+        case .difficultyEasy:
+            return "简单"
+        case .difficultyMedium:
+            return "中等"
         case .overview:
             return "概览"
         case .name:
@@ -128,7 +188,7 @@ enum L10n {
             return "阵营"
         case .difficulty:
             return "难度"
-        case .images:
+        case .teachingImages:
             return "教学图片"
         case .startPosition:
             return "站位图"

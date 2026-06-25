@@ -8,12 +8,12 @@ struct MirageDetailView: View {
             Section {
                 NavigationLink {
                     TacticalMapView(
-                        mapName: "Mirage",
+                        mapName: L10n.text(.mirage, for: languageManager),
                         lineups: LineupStore.mirageLineups
                     )
                 } label: {
                     Label(
-                        L10n.text(.tacticalMap, for: languageManager),
+                        L10n.text(.tacticalMap2D, for: languageManager),
                         systemImage: "map"
                     )
                 }
@@ -27,12 +27,12 @@ struct MirageDetailView: View {
                     )
                 }
             } header: {
-                Text("Mirage")
+                Text(L10n.text(.mirage, for: languageManager))
             } footer: {
                 Text(L10n.text(.chooseMirageTool, for: languageManager))
             }
         }
-        .navigationTitle("Mirage")
+        .navigationTitle(L10n.text(.mirage, for: languageManager))
     }
 }
 

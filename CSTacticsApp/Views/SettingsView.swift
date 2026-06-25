@@ -17,7 +17,7 @@ struct SettingsView: View {
                     .tag(AppLanguage.en)
             }
         }
-        .navigationTitle(L10n.text(.settingsTitle, for: languageManager))
+        .navigationTitle(L10n.text(.settings, for: languageManager))
     }
 }
 

@@ -10,7 +10,7 @@ struct MapListView: View {
                     MirageDetailView()
                 } label: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Mirage")
+                        Text(L10n.text(.mirage, for: languageManager))
                             .font(.headline)
                         Text(L10n.text(.lineupCount(LineupStore.mirageLineups.count), for: languageManager))
                             .font(.subheadline)
@@ -19,7 +19,7 @@ struct MapListView: View {
                     .padding(.vertical, 4)
                 }
             }
-            .navigationTitle(L10n.text(.mapsTitle, for: languageManager))
+            .navigationTitle(L10n.text(.maps, for: languageManager))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     NavigationLink {
@@ -27,7 +27,7 @@ struct MapListView: View {
                     } label: {
                         Image(systemName: "gearshape")
                     }
-                    .accessibilityLabel(L10n.text(.settingsTitle, for: languageManager))
+                    .accessibilityLabel(L10n.text(.settings, for: languageManager))
                 }
             }
         }
