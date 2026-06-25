@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 struct AboutView: View {
     @EnvironmentObject private var languageManager: LanguageManager
@@ -24,6 +25,12 @@ struct AboutView: View {
 
                 AboutCard {
                     VStack(spacing: 12) {
+                        CreatorAvatarView(imageName: "creator_avatar")
+
+                        Text(L10n.text(.creatorName, for: languageManager))
+                            .font(.title3.bold())
+                            .foregroundStyle(.white)
+
                         infoRow(
                             title: L10n.text(.appName, for: languageManager),
                             value: L10n.text(.appDisplayName, for: languageManager)
@@ -78,6 +85,31 @@ struct AboutView: View {
                     .font(.body)
                     .foregroundStyle(.white.opacity(0.82))
             }
+        }
+    }
+}
+
+private struct CreatorAvatarView: View {
+    let imageName: String
+
+    var body: some View {
+        Group {
+            if let image = UIImage(named: imageName) {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(.white.opacity(0.72))
+            }
+        }
+        .frame(width: 96, height: 96)
+        .clipShape(Circle())
+        .overlay {
+            Circle()
+                .stroke(.white.opacity(0.18), lineWidth: 1)
         }
     }
 }
