@@ -8,6 +8,7 @@ struct UtilityLineup: Identifiable, Hashable {
     let type: UtilityType
     let side: String
     let category: LineupCategory
+    let isFeatured: Bool
     let startArea: LocalizedText
     let targetArea: LocalizedText
     let throwMethod: LocalizedText
@@ -27,6 +28,7 @@ struct UtilityLineup: Identifiable, Hashable {
         type: UtilityType,
         side: String,
         category: LineupCategory,
+        isFeatured: Bool = false,
         startArea: LocalizedText,
         targetArea: LocalizedText,
         throwMethod: LocalizedText,
@@ -45,6 +47,7 @@ struct UtilityLineup: Identifiable, Hashable {
         self.type = type
         self.side = side
         self.category = category
+        self.isFeatured = isFeatured
         self.startArea = startArea
         self.targetArea = targetArea
         self.throwMethod = throwMethod
@@ -65,6 +68,7 @@ struct UtilityLineup: Identifiable, Hashable {
         type: UtilityType,
         side: String,
         category: LineupCategory,
+        isFeatured: Bool = false,
         startArea: LocalizedText,
         targetArea: LocalizedText,
         throwMethod: LocalizedText,
@@ -82,6 +86,7 @@ struct UtilityLineup: Identifiable, Hashable {
             type: type,
             side: side,
             category: category,
+            isFeatured: isFeatured,
             startArea: startArea,
             targetArea: targetArea,
             throwMethod: throwMethod,

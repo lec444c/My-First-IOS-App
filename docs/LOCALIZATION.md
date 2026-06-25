@@ -68,6 +68,11 @@ CSTacticsApp 支持 English 和简体中文。用户选择语言由 `LanguageMan
 - `unofficialNoticeText`: 非官方声明文案
 - `acknowledgements`: 鸣谢 / Acknowledgements
 - `acknowledgementsText`: 鸣谢文案
+- `mapFilterArea`: 区域 / Area
+- `mapFilterUtilityType`: 道具类型 / Utility Type
+- `mapFilterFeatured`: 推荐 / Featured
+- `mapFilterAll`: 全部 / All
+- `clusteredUtilities`: 道具 / Utilities
 
 ## 检查方式
 
