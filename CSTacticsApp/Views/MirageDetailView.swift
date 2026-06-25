@@ -26,6 +26,15 @@ struct MirageDetailView: View {
                         systemImage: "list.bullet"
                     )
                 }
+
+                NavigationLink {
+                    LineupSearchView(groups: LineupStore.mirageLineupGroups)
+                } label: {
+                    Label(
+                        L10n.text(.search, for: languageManager),
+                        systemImage: "magnifyingglass"
+                    )
+                }
             } header: {
                 Text(L10n.text(.mirage, for: languageManager))
             } footer: {
