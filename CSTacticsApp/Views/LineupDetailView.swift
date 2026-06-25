@@ -12,10 +12,10 @@ struct LineupDetailView: View {
                 detailRow(L10n.text(.name, for: languageManager), lineup.name.value(for: languageManager))
                 detailRow(L10n.text(.type, for: languageManager), lineup.type.displayName(for: languageManager))
                 detailRow(L10n.text(.side, for: languageManager), lineup.side)
-                detailRow(L10n.text(.difficulty, for: languageManager), localizedDifficulty)
+                detailRow(L10n.text(.difficulty, for: languageManager), lineup.difficultyDisplayName(for: languageManager))
             }
 
-            Section(L10n.text(.images, for: languageManager)) {
+            Section(L10n.text(.teachingImages, for: languageManager)) {
                 VStack(spacing: 12) {
                     TeachingImageCard(
                         title: L10n.text(.startPosition, for: languageManager),
@@ -51,22 +51,6 @@ struct LineupDetailView: View {
         }
         .navigationTitle(lineup.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
-    }
-
-    private var localizedDifficulty: String {
-        switch languageManager.contentLanguage {
-        case .system, .en:
-            return lineup.difficulty
-        case .zhHans:
-            switch lineup.difficulty {
-            case "Easy":
-                return "简单"
-            case "Medium":
-                return "中等"
-            default:
-                return lineup.difficulty
-            }
-        }
     }
 
     private func detailRow(_ title: String, _ value: String) -> some View {

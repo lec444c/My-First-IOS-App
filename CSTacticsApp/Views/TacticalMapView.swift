@@ -212,11 +212,13 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
 }
 
 #Preview {
+    let languageManager = LanguageManager()
+
     NavigationStack {
         TacticalMapView(
-            mapName: "Mirage",
+            mapName: L10n.text(.mirage, for: languageManager),
             lineups: LineupStore.mirageLineups
         )
-        .environmentObject(LanguageManager())
+        .environmentObject(languageManager)
     }
 }

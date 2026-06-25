@@ -18,6 +18,17 @@ struct UtilityLineup: Identifiable, Hashable {
     let resultImageName: String
     let mapX: Double
     let mapY: Double
+
+    func difficultyDisplayName(for languageManager: LanguageManager) -> String {
+        switch difficulty {
+        case "Easy":
+            return L10n.text(.difficultyEasy, for: languageManager)
+        case "Medium":
+            return L10n.text(.difficultyMedium, for: languageManager)
+        default:
+            return difficulty
+        }
+    }
 }
 
 enum LineupCategory: String, CaseIterable, Hashable {
@@ -28,33 +39,21 @@ enum LineupCategory: String, CaseIterable, Hashable {
     case ctSide
 
     func displayName(for languageManager: LanguageManager) -> String {
-        switch languageManager.contentLanguage {
-        case .system, .en:
-            switch self {
-            case .aSite:
-                return "A Site"
-            case .bSite:
-                return "B Site"
-            case .mid:
-                return "Mid"
-            case .tSide:
-                return "T Side"
-            case .ctSide:
-                return "CT Side"
-            }
-        case .zhHans:
-            switch self {
-            case .aSite:
-                return "A 包点"
-            case .bSite:
-                return "B 包点"
-            case .mid:
-                return "中路"
-            case .tSide:
-                return "T 方"
-            case .ctSide:
-                return "CT 方"
-            }
+        L10n.text(localizationKey, for: languageManager)
+    }
+
+    private var localizationKey: L10n.Key {
+        switch self {
+        case .aSite:
+            return .categoryASite
+        case .bSite:
+            return .categoryBSite
+        case .mid:
+            return .categoryMid
+        case .tSide:
+            return .categoryTSide
+        case .ctSide:
+            return .categoryCTSide
         }
     }
 }
@@ -92,20 +91,19 @@ enum UtilityType: String, CaseIterable, Hashable {
     }
 
     func displayName(for languageManager: LanguageManager) -> String {
-        switch languageManager.contentLanguage {
-        case .system, .en:
-            return rawValue
-        case .zhHans:
-            switch self {
-            case .smoke:
-                return "烟"
-            case .flash:
-                return "闪"
-            case .molotov:
-                return "火"
-            case .he:
-                return "雷"
-            }
+        L10n.text(localizationKey, for: languageManager)
+    }
+
+    private var localizationKey: L10n.Key {
+        switch self {
+        case .smoke:
+            return .smoke
+        case .flash:
+            return .flash
+        case .molotov:
+            return .molotov
+        case .he:
+            return .he
         }
     }
 }
