@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A10000000000000000000010 /* CSTacticsAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000020 /* CSTacticsAppApp.swift */; };
-		A10000000000000000000011 /* UtilityLineup.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* UtilityLineup.swift */; };
+		A10000000000000000000011 /* LineupModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000021 /* LineupModels.swift */; };
 		A10000000000000000000012 /* LineupStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000022 /* LineupStore.swift */; };
 		A10000000000000000000013 /* MapListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000023 /* MapListView.swift */; };
 		A10000000000000000000014 /* TacticalMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000024 /* TacticalMapView.swift */; };
@@ -33,7 +33,7 @@
 /* Begin PBXFileReference section */
 		A10000000000000000000001 /* CSTacticsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSTacticsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A10000000000000000000020 /* CSTacticsAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSTacticsAppApp.swift; sourceTree = "<group>"; };
-		A10000000000000000000021 /* UtilityLineup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityLineup.swift; sourceTree = "<group>"; };
+		A10000000000000000000021 /* LineupModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineupModels.swift; sourceTree = "<group>"; };
 		A10000000000000000000022 /* LineupStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineupStore.swift; sourceTree = "<group>"; };
 		A10000000000000000000023 /* MapListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapListView.swift; sourceTree = "<group>"; };
 		A10000000000000000000024 /* TacticalMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TacticalMapView.swift; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 		A10000000000000000000043 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000021 /* UtilityLineup.swift */,
+				A10000000000000000000021 /* LineupModels.swift */,
 				A1000000000000000000002D /* DeveloperSettings.swift */,
 				A60000000000000000000020 /* FavoriteStore.swift */,
 			);
@@ -227,7 +227,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000000000000000000010 /* CSTacticsAppApp.swift in Sources */,
-				A10000000000000000000011 /* UtilityLineup.swift in Sources */,
+				A10000000000000000000011 /* LineupModels.swift in Sources */,
 				A10000000000000000000012 /* LineupStore.swift in Sources */,
 				A10000000000000000000013 /* MapListView.swift in Sources */,
 				A10000000000000000000014 /* TacticalMapView.swift in Sources */,

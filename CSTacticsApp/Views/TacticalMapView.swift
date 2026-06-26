@@ -18,8 +18,11 @@ struct TacticalMapView: View {
     @State private var lastEditedCoordinate: EditedLineupCoordinate?
     @State private var copyStatusMessage: String?
 
-    let mapName: String
-    let groups: [LineupGroup]
+    let map: Map
+
+    private var groups: [LineupGroup] {
+        map.lineupGroups
+    }
 
     private var filteredGroups: [LineupGroup] {
         groups.filter { group in
@@ -34,7 +37,7 @@ struct TacticalMapView: View {
             let reservedHeight: CGFloat = developerSettings.isDeveloperModeEnabled ? 420 : 176
             let availableHeight = max(geometry.size.height - reservedHeight, 1)
             let mapContainerSize = CGSize(width: availableWidth, height: availableHeight)
-            let mapImageSize = UIImage(named: "mirage_map")?.size ?? CGSize(width: 1, height: 1)
+            let mapImageSize = UIImage(named: map.imageName)?.size ?? CGSize(width: 1, height: 1)
 
             VStack(spacing: 12) {
                 MapFilterBar(
@@ -61,6 +64,7 @@ struct TacticalMapView: View {
                 ) {
                     MapCanvas(
                         containerSize: mapContainerSize,
+                        mapImageName: map.imageName,
                         imageSize: mapImageSize,
                         groups: filteredGroups,
                         editedCoordinates: editedCoordinates,
@@ -120,7 +124,7 @@ struct TacticalMapView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
         }
-        .navigationTitle(mapName)
+        .navigationTitle(map.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(item: $selectedGroup) { group in
             LineupGroupDetailView(group: group)
@@ -339,6 +343,7 @@ private struct MapCanvas: View {
     private let coordinateSpaceName = "tacticalMapCanvas"
 
     let containerSize: CGSize
+    let mapImageName: String
     let imageSize: CGSize
     let groups: [LineupGroup]
     let editedCoordinates: [MapPointKey: CGPoint]
@@ -360,7 +365,7 @@ private struct MapCanvas: View {
         let clusters = clusteredGroups(in: imageRect)
 
         ZStack {
-            Image("mirage_map")
+            Image(mapImageName)
                 .resizable()
                 .scaledToFit()
                 .frame(width: containerSize.width, height: containerSize.height)
@@ -1109,8 +1114,7 @@ private struct ZoomableScrollView<Content: View>: UIViewRepresentable {
 
     NavigationStack {
         TacticalMapView(
-            mapName: L10n.text(.mirage, for: languageManager),
-            groups: LineupStore.mirageLineupGroups
+            map: LineupStore.mirageMap
         )
         .environmentObject(languageManager)
         .environmentObject(developerSettings)

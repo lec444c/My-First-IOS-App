@@ -45,12 +45,12 @@ final class FavoriteStore: ObservableObject {
         }
     }
 
-    func favoriteGroups(in groups: [LineupGroup]) -> [LineupGroup] {
-        groups.filter { groupIDs.contains($0.id) }
+    func favoriteGroups(in map: Map) -> [LineupGroup] {
+        map.lineupGroups.filter { groupIDs.contains($0.id) }
     }
 
-    func favoriteVariants(in groups: [LineupGroup]) -> [FavoriteVariant] {
-        groups.flatMap { group in
+    func favoriteVariants(in map: Map) -> [FavoriteVariant] {
+        map.lineupGroups.flatMap { group in
             group.variants
                 .filter { variantIDs.contains($0.id) }
                 .map { FavoriteVariant(group: group, variant: $0) }

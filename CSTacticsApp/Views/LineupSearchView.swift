@@ -4,10 +4,10 @@ struct LineupSearchView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var searchText = ""
 
-    let groups: [LineupGroup]
+    let map: Map
 
     private var results: [LineupSearchResult] {
-        LineupSearch.results(for: searchText, in: groups)
+        LineupSearch.results(for: searchText, in: map)
     }
 
     var body: some View {
@@ -141,7 +141,7 @@ private enum LineupSearchResult: Identifiable {
 }
 
 private enum LineupSearch {
-    static func results(for query: String, in groups: [LineupGroup]) -> [LineupSearchResult] {
+    static func results(for query: String, in map: Map) -> [LineupSearchResult] {
         let normalizedQuery = normalized(query)
         guard !normalizedQuery.isEmpty else {
             return []
@@ -149,7 +149,7 @@ private enum LineupSearch {
 
         var results: [LineupSearchResult] = []
 
-        for group in groups {
+        for group in map.lineupGroups {
             if matches(query: normalizedQuery, terms: groupSearchTerms(for: group)) {
                 results.append(.group(group))
             }
@@ -247,7 +247,7 @@ private extension LineupCategory {
 
 #Preview {
     NavigationStack {
-        LineupSearchView(groups: LineupStore.mirageLineupGroups)
+        LineupSearchView(map: LineupStore.mirageMap)
             .environmentObject(LanguageManager())
             .environmentObject(FavoriteStore())
     }
