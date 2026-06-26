@@ -13,7 +13,6 @@ enum L10n {
         case english
         case tacticalMap2D
         case utilityList
-        case chooseMirageTool
         case mapFeatureSubtitle
         case listFeatureSubtitle
         case searchFeatureSubtitle
@@ -130,13 +129,11 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D Tactical Map"
+            return "2D Map"
         case .utilityList:
             return "Lineup List"
-        case .chooseMirageTool:
-            return "Choose a focused way to study Mirage utility."
         case .mapFeatureSubtitle:
-            return "Browse recommended targets on the 2D map."
+            return "Browse utility targets on a clean tactical map."
         case .listFeatureSubtitle:
             return "Study lineups by site, mid, and side."
         case .searchFeatureSubtitle:
@@ -327,13 +324,11 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D 战术地图"
+            return "2D 地图"
         case .utilityList:
             return "道具列表"
-        case .chooseMirageTool:
-            return "选择一种清晰的 Mirage 道具学习方式。"
         case .mapFeatureSubtitle:
-            return "在 2D 地图上浏览推荐目标点。"
+            return "在简洁地图上浏览道具目标点。"
         case .listFeatureSubtitle:
             return "按包点、中路和阵营学习道具。"
         case .searchFeatureSubtitle:

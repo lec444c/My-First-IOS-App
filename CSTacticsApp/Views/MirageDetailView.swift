@@ -44,9 +44,6 @@ struct MirageDetailView: View {
                     FavoritesView(map: map)
                 }
             }
-            footer: {
-                Text(L10n.text(.chooseMirageTool, for: languageManager))
-            }
         }
         .listStyle(.insetGrouped)
         .navigationTitle(map.name.value(for: languageManager))
@@ -69,6 +66,9 @@ struct MirageDetailView: View {
                 color: color
             )
         }
+        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+        .listRowSeparator(.hidden)
+        .listRowBackground(Color.clear)
     }
 }
 
@@ -95,8 +95,13 @@ private struct FeatureEntryRow: View {
                     .foregroundStyle(.secondary)
                     .lineLimit(2)
             }
-            .padding(.vertical, 4)
+
+            Spacer(minLength: 8)
         }
+        .padding(16)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Color(.secondarySystemGroupedBackground))
+        .clipShape(RoundedRectangle(cornerRadius: 14, style: .continuous))
     }
 }
 
