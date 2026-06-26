@@ -14,6 +14,10 @@ enum L10n {
         case tacticalMap2D
         case utilityList
         case chooseMirageTool
+        case mapFeatureSubtitle
+        case listFeatureSubtitle
+        case searchFeatureSubtitle
+        case favoritesFeatureSubtitle
         case categoryASite
         case categoryBSite
         case categoryMid
@@ -41,6 +45,8 @@ enum L10n {
         case targetArea
         case throwMethod
         case description
+        case lineupSteps
+        case notes
         case tapUtilityHint
         case developerMode
         case developerMapHint
@@ -90,6 +96,8 @@ enum L10n {
         case emptyFavoritesMessage
         case emptyUtilities
         case emptyUtilitiesMessage
+        case variantSubtitle
+        case groupSubtitle
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -110,7 +118,7 @@ enum L10n {
         case .lineupCount(let count):
             return "\(count) utility lineups"
         case .variantCount(let count):
-            return "\(count) variants"
+            return "\(count) options"
         case .settings:
             return "Settings"
         case .language:
@@ -124,9 +132,17 @@ enum L10n {
         case .tacticalMap2D:
             return "2D Tactical Map"
         case .utilityList:
-            return "Utility List"
+            return "Lineup List"
         case .chooseMirageTool:
-            return "Choose how to study Mirage utility."
+            return "Choose a focused way to study Mirage utility."
+        case .mapFeatureSubtitle:
+            return "Browse recommended targets on the 2D map."
+        case .listFeatureSubtitle:
+            return "Study lineups by site, mid, and side."
+        case .searchFeatureSubtitle:
+            return "Find utility by name, area, or type."
+        case .favoritesFeatureSubtitle:
+            return "Open saved groups and variants."
         case .categoryASite:
             return "A Site"
         case .categoryBSite:
@@ -162,7 +178,7 @@ enum L10n {
         case .difficulty:
             return "Difficulty"
         case .teachingImages:
-            return "Teaching Images"
+            return "Images"
         case .startPosition:
             return "Start Position"
         case .aimPoint:
@@ -181,6 +197,10 @@ enum L10n {
             return "Throw Method"
         case .description:
             return "Description"
+        case .lineupSteps:
+            return "Lineup Steps"
+        case .notes:
+            return "Notes"
         case .tapUtilityHint:
             return "Tap a utility point to view details."
         case .developerMode:
@@ -232,13 +252,13 @@ enum L10n {
         case .mapFilterUtilityType:
             return "Utility Type"
         case .mapFilterFeatured:
-            return "Featured"
+            return "Recommended"
         case .mapFilterAll:
             return "All"
         case .clusteredUtilities:
             return "Utilities"
         case .lineupVariants:
-            return "Lineup Variants"
+            return "Lineup Options"
         case .spawnRequirement:
             return "Spawn / Body Position"
         case .targetPoints:
@@ -260,13 +280,13 @@ enum L10n {
         case .searchResultGroup:
             return "Lineup Group"
         case .searchResultVariant:
-            return "Variant"
+            return "Lineup Option"
         case .favorites:
             return "Favorites"
         case .favoriteGroups:
             return "Favorite Lineup Groups"
         case .favoriteVariants:
-            return "Favorite Variants"
+            return "Favorite Lineup Options"
         case .addFavorite:
             return "Add Favorite"
         case .removeFavorite:
@@ -279,6 +299,10 @@ enum L10n {
             return "No utilities yet."
         case .emptyUtilitiesMessage:
             return "Try another filter or add more local lineup data later."
+        case .variantSubtitle:
+            return "Lineup Option"
+        case .groupSubtitle:
+            return "Lineup Group"
         }
     }
 
@@ -307,7 +331,15 @@ enum L10n {
         case .utilityList:
             return "道具列表"
         case .chooseMirageTool:
-            return "选择学习 Mirage 道具的方式。"
+            return "选择一种清晰的 Mirage 道具学习方式。"
+        case .mapFeatureSubtitle:
+            return "在 2D 地图上浏览推荐目标点。"
+        case .listFeatureSubtitle:
+            return "按包点、中路和阵营学习道具。"
+        case .searchFeatureSubtitle:
+            return "按名称、区域或类型快速查找。"
+        case .favoritesFeatureSubtitle:
+            return "查看已收藏的道具组和丢法。"
         case .categoryASite:
             return "A 包点"
         case .categoryBSite:
@@ -362,6 +394,10 @@ enum L10n {
             return "投掷方式"
         case .description:
             return "说明"
+        case .lineupSteps:
+            return "投掷步骤"
+        case .notes:
+            return "备注"
         case .tapUtilityHint:
             return "点击道具点查看详情。"
         case .developerMode:
@@ -460,6 +496,10 @@ enum L10n {
             return "暂无道具"
         case .emptyUtilitiesMessage:
             return "可以切换筛选条件，或后续继续添加本地道具数据。"
+        case .variantSubtitle:
+            return "丢法"
+        case .groupSubtitle:
+            return "道具组"
         }
     }
 }
