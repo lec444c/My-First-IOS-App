@@ -85,7 +85,14 @@ struct LineupDetailView: View {
                         systemImage: "photo.on.rectangle"
                     )
                 }
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+                .listRowInsets(
+                    EdgeInsets(
+                        top: 8,
+                        leading: AppTheme.pagePadding,
+                        bottom: 8,
+                        trailing: AppTheme.pagePadding
+                    )
+                )
             }
 
             Section(L10n.text(.notes, for: languageManager)) {
@@ -95,6 +102,8 @@ struct LineupDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(variant.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -166,8 +175,8 @@ private struct TeachingImageCard: View {
                             .resizable()
                             .scaledToFit()
                     } else {
-                        RoundedRectangle(cornerRadius: 8)
-                            .fill(Color(.systemGray5))
+                        RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius)
+                            .fill(AppTheme.cardBackground)
                             .frame(height: 150)
                             .overlay {
                                 VStack(spacing: 8) {
@@ -181,14 +190,14 @@ private struct TeachingImageCard: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .clipShape(RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius))
             }
-            .padding(12)
-            .background(Color(.secondarySystemBackground))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(AppTheme.cardPadding)
+            .background(AppTheme.cardBackground)
+            .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
         }
         .buttonStyle(.plain)
-        .contentShape(RoundedRectangle(cornerRadius: 8))
+        .contentShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
         .accessibilityLabel(item.title)
     }
 }

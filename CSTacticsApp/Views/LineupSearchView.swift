@@ -14,7 +14,7 @@ struct LineupSearchView: View {
         List {
             if searchText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                 Text(L10n.text(.searchHint, for: languageManager))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
             } else if results.isEmpty {
                 EmptyStateView(
                     systemImage: "magnifyingglass",
@@ -32,6 +32,8 @@ struct LineupSearchView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(L10n.text(.search, for: languageManager))
         .searchable(
             text: $searchText,
@@ -59,12 +61,7 @@ private struct SearchResultRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 8) {
-                Text(result.utilityType.symbol)
-                    .font(.caption.bold())
-                    .foregroundStyle(result.utilityType == .flash ? .black : .white)
-                    .frame(width: 26, height: 26)
-                    .background(result.utilityType.color)
-                    .clipShape(Circle())
+                MapMarkerView(type: result.utilityType, markerSize: 28)
 
                 VStack(alignment: .leading, spacing: 2) {
                     Text(result.title(for: languageManager))
@@ -72,15 +69,15 @@ private struct SearchResultRow: View {
 
                     Text(result.kindTitle(for: languageManager))
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.secondaryText)
                 }
             }
 
             Text(result.subtitle(for: languageManager))
                 .font(.subheadline)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.secondaryText)
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, AppTheme.smallCornerRadius - 6)
     }
 }
 

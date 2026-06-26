@@ -55,6 +55,8 @@ struct FavoritesView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(L10n.text(.favorites, for: languageManager))
     }
 }
@@ -73,13 +75,13 @@ private struct FavoriteGroupRow: View {
                     .font(.headline)
                 Text(L10n.text(.groupSubtitle, for: languageManager))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
                 Text(L10n.text(.variantCount(group.variants.count), for: languageManager))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, AppTheme.smallCornerRadius - 6)
     }
 }
 
@@ -97,13 +99,13 @@ private struct FavoriteVariantRow: View {
                     .font(.headline)
                 Text(item.group.targetName.value(for: languageManager))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
                 Text(item.variant.startArea.value(for: languageManager))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, AppTheme.smallCornerRadius - 6)
     }
 }
 

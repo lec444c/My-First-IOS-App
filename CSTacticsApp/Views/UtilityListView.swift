@@ -39,6 +39,8 @@ struct UtilityListView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(L10n.text(.utilityList, for: languageManager))
     }
 }
@@ -63,7 +65,7 @@ private struct UtilityListRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            .padding(.vertical, 4)
+            .padding(.vertical, AppTheme.smallCornerRadius - 6)
         }
     }
 }

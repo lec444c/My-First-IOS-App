@@ -46,6 +46,8 @@ struct MirageDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(map.name.value(for: languageManager))
     }
 
@@ -66,7 +68,14 @@ struct MirageDetailView: View {
                 color: color
             )
         }
-        .listRowInsets(EdgeInsets(top: 6, leading: 16, bottom: 6, trailing: 16))
+        .listRowInsets(
+            EdgeInsets(
+                top: 6,
+                leading: AppTheme.pagePadding,
+                bottom: 6,
+                trailing: AppTheme.pagePadding
+            )
+        )
         .listRowSeparator(.hidden)
         .listRowBackground(Color.clear)
     }

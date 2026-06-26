@@ -42,6 +42,8 @@ struct LineupGroupDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(group.targetName.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -121,7 +123,7 @@ private struct VariantCard: View {
                 value: variant.throwMethod.value(for: languageManager)
             )
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, AppTheme.smallCornerRadius - 2)
     }
 
     private func labeledText(title: String, value: String) -> some View {

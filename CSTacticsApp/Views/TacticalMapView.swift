@@ -33,7 +33,7 @@ struct TacticalMapView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            let availableWidth = max(geometry.size.width - 32, 1)
+            let availableWidth = max(geometry.size.width - AppTheme.pagePadding * 2, 1)
             let reservedHeight: CGFloat = developerSettings.isDeveloperModeEnabled ? 420 : 176
             let availableHeight = max(geometry.size.height - reservedHeight, 1)
             let mapContainerSize = CGSize(width: availableWidth, height: availableHeight)
@@ -101,15 +101,15 @@ struct TacticalMapView: View {
                     .environmentObject(languageManager)
                 }
                 .frame(width: mapContainerSize.width, height: mapContainerSize.height)
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
                 .overlay {
-                    RoundedRectangle(cornerRadius: 14)
-                        .stroke(.secondary.opacity(0.35), lineWidth: 1)
+                    RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius)
+                        .stroke(AppTheme.secondaryText.opacity(0.35), lineWidth: 1)
                 }
 
                 Text(mapHintText)
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
 
                 if developerSettings.isDeveloperModeEnabled {
                     DeveloperCoordinatePanel(
@@ -122,8 +122,9 @@ struct TacticalMapView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
+            .padding(AppTheme.pagePadding)
         }
+        .background(AppTheme.background)
         .navigationTitle(map.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(item: $selectedGroup) { group in
@@ -960,8 +961,8 @@ private struct DeveloperCoordinatePanel: View {
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
-        .background(Color(.secondarySystemBackground))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .background(AppTheme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.smallCornerRadius))
     }
 
     private var sectionTitle: String {
