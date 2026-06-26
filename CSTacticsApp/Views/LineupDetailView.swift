@@ -15,14 +15,17 @@ struct LineupDetailView: View {
         [
             TeachingImageItem(
                 title: L10n.text(.startPosition, for: languageManager),
+                systemImage: "figure.stand",
                 imageName: variant.positionImageName
             ),
             TeachingImageItem(
                 title: L10n.text(.aimPoint, for: languageManager),
+                systemImage: "scope",
                 imageName: variant.aimImageName
             ),
             TeachingImageItem(
                 title: L10n.text(.result, for: languageManager),
+                systemImage: "target",
                 imageName: variant.resultImageName
             )
         ]
@@ -36,9 +39,18 @@ struct LineupDetailView: View {
         List {
             Section(L10n.text(.overview, for: languageManager)) {
                 detailRow(L10n.text(.name, for: languageManager), variant.name.value(for: languageManager))
-                detailRow(L10n.text(.type, for: languageManager), group.type.displayName(for: languageManager))
-                detailRow(L10n.text(.side, for: languageManager), group.side)
-                detailRow(L10n.text(.difficulty, for: languageManager), variant.difficultyDisplayName(for: languageManager))
+                badgeRow(
+                    L10n.text(.type, for: languageManager),
+                    UtilityBadge.utilityType(group.type, for: languageManager)
+                )
+                badgeRow(
+                    L10n.text(.side, for: languageManager),
+                    UtilityBadge.side(group.side)
+                )
+                badgeRow(
+                    L10n.text(.difficulty, for: languageManager),
+                    UtilityBadge.difficulty(variant.difficultyDisplayName(for: languageManager))
+                )
             }
 
             Section(L10n.text(.position, for: languageManager)) {
@@ -116,10 +128,20 @@ struct LineupDetailView: View {
                 .multilineTextAlignment(.trailing)
         }
     }
+
+    private func badgeRow(_ title: String, _ badge: UtilityBadge) -> some View {
+        HStack(alignment: .center) {
+            Text(title)
+                .foregroundStyle(AppTheme.secondaryText)
+            Spacer()
+            badge
+        }
+    }
 }
 
 private struct TeachingImageItem: Identifiable {
     let title: String
+    let systemImage: String
     let imageName: String
 
     var id: String {
@@ -135,7 +157,7 @@ private struct TeachingImageCard: View {
     var body: some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(item.title)
+                Label(item.title, systemImage: item.systemImage)
                     .font(.headline)
 
                 Group {

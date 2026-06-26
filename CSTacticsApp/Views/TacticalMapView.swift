@@ -330,7 +330,7 @@ private struct FilterChip: View {
                 .foregroundStyle(isSelected ? .white : .primary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 8)
-                .background(isSelected ? Color.accentColor : Color(.secondarySystemBackground))
+                .background(isSelected ? AppTheme.accent : AppTheme.cardBackground)
                 .clipShape(Capsule())
         }
         .buttonStyle(.plain)
@@ -502,7 +502,12 @@ private struct MapCanvas: View {
         group: LineupGroup,
         imageRect: CGRect
     ) -> some View {
-        EditableMapPoint(title: group.targetName.value(for: languageManager), group: group, kind: .groupTarget)
+        EditableMapPoint(
+            title: group.targetName.value(for: languageManager),
+            group: group,
+            kind: .groupTarget,
+            coordinate: groupTargetCoordinate(for: group)
+        )
             .frame(width: 124, height: 76)
             .contentShape(Rectangle())
             .highPriorityGesture(
@@ -526,7 +531,12 @@ private struct MapCanvas: View {
         variant: LineupVariant,
         imageRect: CGRect
     ) -> some View {
-        EditableMapPoint(title: variant.name.value(for: languageManager), group: group, kind: .variantStart)
+        EditableMapPoint(
+            title: variant.name.value(for: languageManager),
+            group: group,
+            kind: .variantStart,
+            coordinate: variantStartCoordinate(for: group, variant: variant)
+        )
             .frame(width: 124, height: 76)
             .contentShape(Rectangle())
             .highPriorityGesture(
@@ -638,46 +648,10 @@ private struct UtilityPoint: View {
     let group: LineupGroup
 
     var body: some View {
-        ZStack {
-            Circle()
-                .fill(group.type.color)
-                .frame(width: 26, height: 26)
-                .overlay {
-                    Circle()
-                        .stroke(.white.opacity(0.95), lineWidth: 2)
-                }
-
-            Circle()
-                .fill(.white.opacity(0.8))
-                .frame(width: 6, height: 6)
-        }
-        .shadow(radius: 2)
-        .frame(width: 44, height: 44)
-        .contentShape(Rectangle())
-        .accessibilityLabel(
-            "\(group.targetName.value(for: languageManager)), \(group.type.displayName(for: languageManager))"
+        MapMarkerView(
+            type: group.type,
+            markerSize: 28
         )
-    }
-}
-
-private struct DeveloperUtilityPoint: View {
-    @EnvironmentObject private var languageManager: LanguageManager
-
-    let group: LineupGroup
-
-    var body: some View {
-        Text(group.type.symbol)
-            .font(.headline)
-            .foregroundStyle(group.type == .flash ? .black : .white)
-            .frame(width: 34, height: 34)
-            .background(group.type.color)
-            .clipShape(Circle())
-            .overlay {
-                Circle()
-                    .stroke(.white, lineWidth: 2)
-            }
-            .shadow(radius: 3)
-            .frame(width: 44, height: 44)
             .accessibilityLabel(
                 "\(group.targetName.value(for: languageManager)), \(group.type.displayName(for: languageManager))"
             )
@@ -692,7 +666,7 @@ private struct ClusterPoint: View {
             .font(.headline.weight(.bold))
             .foregroundStyle(.white)
             .frame(width: 36, height: 36)
-            .background(Color.accentColor)
+            .background(AppTheme.accent)
             .clipShape(Circle())
             .overlay {
                 Circle()
@@ -703,47 +677,22 @@ private struct ClusterPoint: View {
     }
 }
 
-private struct VariantStartPoint: View {
-    let group: LineupGroup
-
-    var body: some View {
-        Circle()
-            .fill(group.type.color)
-            .frame(width: 18, height: 18)
-            .overlay {
-                Circle()
-                    .stroke(.white, lineWidth: 2)
-            }
-            .shadow(radius: 2)
-            .frame(width: 44, height: 44)
-    }
-}
-
 private struct EditableMapPoint: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
     let title: String
     let group: LineupGroup
     let kind: MapPointKind
+    let coordinate: CGPoint
 
     var body: some View {
-        ZStack {
-            if kind == .groupTarget {
-                DeveloperUtilityPoint(group: group)
-            } else {
-                VariantStartPoint(group: group)
-            }
-
-            Text(labelText)
-                .font(.caption2)
-                .lineLimit(1)
-                .padding(.horizontal, 6)
-                .padding(.vertical, 3)
-                .foregroundStyle(.primary)
-                .background(.thinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
-                .offset(y: 34)
-        }
+        MapMarkerView(
+            type: group.type,
+            title: labelText,
+            coordinate: coordinate,
+            showsDeveloperInfo: true,
+            markerSize: kind == .groupTarget ? 34 : 24
+        )
     }
 
     private var labelText: String {

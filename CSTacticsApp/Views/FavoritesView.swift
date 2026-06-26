@@ -66,7 +66,7 @@ private struct FavoriteGroupRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            UtilityBadge(type: group.type)
+            MapMarkerView(type: group.type, markerSize: 32)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(group.targetName.value(for: languageManager))
@@ -90,7 +90,7 @@ private struct FavoriteVariantRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            UtilityBadge(type: item.group.type)
+            MapMarkerView(type: item.group.type, markerSize: 32)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.variant.name.value(for: languageManager))
@@ -104,19 +104,6 @@ private struct FavoriteVariantRow: View {
             }
         }
         .padding(.vertical, 4)
-    }
-}
-
-private struct UtilityBadge: View {
-    let type: UtilityType
-
-    var body: some View {
-        Text(type.symbol)
-            .font(.headline)
-            .foregroundStyle(type == .flash ? .black : .white)
-            .frame(width: 34, height: 34)
-            .background(type.color)
-            .clipShape(Circle())
     }
 }
 
