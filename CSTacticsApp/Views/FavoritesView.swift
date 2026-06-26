@@ -30,6 +30,7 @@ struct FavoritesView: View {
                                 FavoriteGroupRow(group: group)
                                     .environmentObject(languageManager)
                             }
+                            .favoriteCardRowStyle()
                         }
                     }
                 }
@@ -43,6 +44,7 @@ struct FavoritesView: View {
                                 FavoriteVariantRow(item: item)
                                     .environmentObject(languageManager)
                             }
+                            .favoriteCardRowStyle()
                         }
                     }
                 }
@@ -81,7 +83,10 @@ private struct FavoriteGroupRow: View {
                     .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, AppTheme.smallCornerRadius - 6)
+        .padding(AppTheme.cardPadding)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
     }
 }
 
@@ -105,7 +110,26 @@ private struct FavoriteVariantRow: View {
                     .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, AppTheme.smallCornerRadius - 6)
+        .padding(AppTheme.cardPadding)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
+    }
+}
+
+private extension View {
+    func favoriteCardRowStyle() -> some View {
+        self
+            .listRowInsets(
+                EdgeInsets(
+                    top: 6,
+                    leading: AppTheme.pagePadding,
+                    bottom: 6,
+                    trailing: AppTheme.pagePadding
+                )
+            )
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
     }
 }
 

@@ -28,6 +28,7 @@ struct LineupSearchView: View {
                         SearchResultRow(result: result)
                             .environmentObject(languageManager)
                     }
+                    .searchCardRowStyle()
                 }
             }
         }
@@ -77,7 +78,26 @@ private struct SearchResultRow: View {
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.secondaryText)
         }
-        .padding(.vertical, AppTheme.smallCornerRadius - 6)
+        .padding(AppTheme.cardPadding)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
+    }
+}
+
+private extension View {
+    func searchCardRowStyle() -> some View {
+        self
+            .listRowInsets(
+                EdgeInsets(
+                    top: 6,
+                    leading: AppTheme.pagePadding,
+                    bottom: 6,
+                    trailing: AppTheme.pagePadding
+                )
+            )
+            .listRowSeparator(.hidden)
+            .listRowBackground(Color.clear)
     }
 }
 
