@@ -392,7 +392,7 @@ private struct ZoomableImageView: UIViewRepresentable {
 }
 
 #Preview {
-    let group = LineupStore.mirageLineupGroups[0]
+    let group = LineupStore.mirageMap.lineupGroups[0]
 
     NavigationStack {
         LineupDetailView(group: group, variant: group.variants[0])

@@ -9,7 +9,7 @@ struct CSTacticsAppApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                MirageDetailView()
+                MirageDetailView(map: LineupStore.mirageMap)
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             NavigationLink {

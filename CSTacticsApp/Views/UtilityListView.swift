@@ -3,7 +3,11 @@ import SwiftUI
 struct UtilityListView: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
-    let groups: [LineupGroup]
+    let map: Map
+
+    private var groups: [LineupGroup] {
+        map.lineupGroups
+    }
 
     var body: some View {
         List {
@@ -70,7 +74,7 @@ private struct UtilityListRow: View {
 
 #Preview {
     NavigationStack {
-        UtilityListView(groups: LineupStore.mirageLineupGroups)
+        UtilityListView(map: LineupStore.mirageMap)
             .environmentObject(LanguageManager())
             .environmentObject(FavoriteStore())
     }

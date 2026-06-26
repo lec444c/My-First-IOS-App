@@ -3,6 +3,8 @@ import SwiftUI
 struct MirageDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
 
+    let map: Map
+
     var body: some View {
         List {
             Section {
@@ -12,10 +14,7 @@ struct MirageDetailView: View {
                     systemImage: "map",
                     color: .blue
                 ) {
-                    TacticalMapView(
-                        mapName: L10n.text(.mirage, for: languageManager),
-                        groups: LineupStore.mirageLineupGroups
-                    )
+                    TacticalMapView(map: map)
                 }
 
                 featureLink(
@@ -24,7 +23,7 @@ struct MirageDetailView: View {
                     systemImage: "list.bullet",
                     color: .green
                 ) {
-                    UtilityListView(groups: LineupStore.mirageLineupGroups)
+                    UtilityListView(map: map)
                 }
 
                 featureLink(
@@ -33,7 +32,7 @@ struct MirageDetailView: View {
                     systemImage: "magnifyingglass",
                     color: .orange
                 ) {
-                    LineupSearchView(groups: LineupStore.mirageLineupGroups)
+                    LineupSearchView(map: map)
                 }
 
                 featureLink(
@@ -42,7 +41,7 @@ struct MirageDetailView: View {
                     systemImage: "star",
                     color: .yellow
                 ) {
-                    FavoritesView(groups: LineupStore.mirageLineupGroups)
+                    FavoritesView(map: map)
                 }
             }
             footer: {
@@ -50,7 +49,7 @@ struct MirageDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle(L10n.text(.mirage, for: languageManager))
+        .navigationTitle(map.name.value(for: languageManager))
     }
 
     private func featureLink<Destination: View>(
@@ -103,7 +102,7 @@ private struct FeatureEntryRow: View {
 
 #Preview {
     NavigationStack {
-        MirageDetailView()
+        MirageDetailView(map: LineupStore.mirageMap)
             .environmentObject(LanguageManager())
             .environmentObject(FavoriteStore())
     }

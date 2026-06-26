@@ -126,7 +126,7 @@ private struct VariantCard: View {
 
 #Preview {
     NavigationStack {
-        LineupGroupDetailView(group: LineupStore.mirageLineupGroups[0])
+        LineupGroupDetailView(group: LineupStore.mirageMap.lineupGroups[0])
             .environmentObject(LanguageManager())
             .environmentObject(FavoriteStore())
     }
