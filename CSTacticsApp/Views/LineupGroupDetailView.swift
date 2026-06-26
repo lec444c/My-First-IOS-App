@@ -38,6 +38,16 @@ struct LineupGroupDetailView: View {
                             .environmentObject(languageManager)
                             .environmentObject(favoriteStore)
                     }
+                    .listRowInsets(
+                        EdgeInsets(
+                            top: 6,
+                            leading: AppTheme.pagePadding,
+                            bottom: 6,
+                            trailing: AppTheme.pagePadding
+                        )
+                    )
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
                 }
             }
         }
@@ -63,7 +73,7 @@ struct LineupGroupDetailView: View {
     private func detailRow(_ title: String, _ value: String) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Text(title)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.secondaryText)
             Spacer()
             Text(value)
                 .multilineTextAlignment(.trailing)
@@ -123,14 +133,17 @@ private struct VariantCard: View {
                 value: variant.throwMethod.value(for: languageManager)
             )
         }
-        .padding(.vertical, AppTheme.smallCornerRadius - 2)
+        .padding(AppTheme.cardPadding)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(AppTheme.cardBackground)
+        .clipShape(RoundedRectangle(cornerRadius: AppTheme.cardCornerRadius))
     }
 
     private func labeledText(title: String, value: String) -> some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.secondaryText)
             Text(value)
                 .font(.subheadline)
         }

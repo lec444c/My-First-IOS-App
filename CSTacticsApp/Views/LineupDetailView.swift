@@ -48,6 +48,10 @@ struct LineupDetailView: View {
                     UtilityBadge.side(group.side)
                 )
                 badgeRow(
+                    L10n.text(.category, for: languageManager),
+                    UtilityBadge.category(group.category, for: languageManager)
+                )
+                badgeRow(
                     L10n.text(.difficulty, for: languageManager),
                     UtilityBadge.difficulty(variant.difficultyDisplayName(for: languageManager))
                 )
@@ -131,7 +135,7 @@ struct LineupDetailView: View {
     private func detailRow(_ title: String, _ value: String) -> some View {
         HStack(alignment: .firstTextBaseline) {
             Text(title)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.secondaryText)
             Spacer()
             Text(value)
                 .multilineTextAlignment(.trailing)
@@ -185,7 +189,7 @@ private struct TeachingImageCard: View {
                                     Text(placeholderText)
                                         .font(.subheadline)
                                 }
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(AppTheme.secondaryText)
                             }
                     }
                 }
