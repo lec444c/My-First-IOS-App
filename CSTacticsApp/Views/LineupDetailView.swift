@@ -6,6 +6,7 @@ struct LineupDetailView: View {
     @EnvironmentObject private var favoriteStore: FavoriteStore
     @State private var isImagePreviewPresented = false
     @State private var selectedImageIndex = 0
+    @State private var isImagesExpanded = false
 
     let group: LineupGroup
     let variant: LineupVariant
@@ -35,41 +36,53 @@ struct LineupDetailView: View {
         List {
             Section(L10n.text(.overview, for: languageManager)) {
                 detailRow(L10n.text(.name, for: languageManager), variant.name.value(for: languageManager))
-                detailRow(L10n.text(.targetArea, for: languageManager), group.targetName.value(for: languageManager))
                 detailRow(L10n.text(.type, for: languageManager), group.type.displayName(for: languageManager))
                 detailRow(L10n.text(.side, for: languageManager), group.side)
                 detailRow(L10n.text(.difficulty, for: languageManager), variant.difficultyDisplayName(for: languageManager))
-                detailRow(L10n.text(.spawnRequirement, for: languageManager), variant.spawnRequirement.value(for: languageManager))
-            }
-
-            Section(L10n.text(.teachingImages, for: languageManager)) {
-                VStack(spacing: 12) {
-                    ForEach(teachingImages.indices, id: \.self) { index in
-                        TeachingImageCard(
-                            item: teachingImages[index],
-                            placeholderText: L10n.text(.placeholder, for: languageManager)
-                        ) {
-                            selectedImageIndex = index
-                            isImagePreviewPresented = true
-                        }
-                    }
-                }
-                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
             }
 
             Section(L10n.text(.position, for: languageManager)) {
                 detailRow(L10n.text(.startArea, for: languageManager), variant.startArea.value(for: languageManager))
                 detailRow(L10n.text(.targetArea, for: languageManager), group.targetName.value(for: languageManager))
+                detailRow(L10n.text(.spawnRequirement, for: languageManager), variant.spawnRequirement.value(for: languageManager))
             }
 
-            Section(L10n.text(.throwMethod, for: languageManager)) {
+            Section(L10n.text(.lineupSteps, for: languageManager)) {
                 Text(variant.throwMethod.value(for: languageManager))
+                    .font(.body)
+                    .lineSpacing(3)
             }
 
-            Section(L10n.text(.description, for: languageManager)) {
+            Section {
+                DisclosureGroup(isExpanded: $isImagesExpanded) {
+                    VStack(spacing: 12) {
+                        ForEach(teachingImages.indices, id: \.self) { index in
+                            TeachingImageCard(
+                                item: teachingImages[index],
+                                placeholderText: L10n.text(.placeholder, for: languageManager)
+                            ) {
+                                selectedImageIndex = index
+                                isImagePreviewPresented = true
+                            }
+                        }
+                    }
+                    .padding(.top, 8)
+                } label: {
+                    Label(
+                        L10n.text(.teachingImages, for: languageManager),
+                        systemImage: "photo.on.rectangle"
+                    )
+                }
+                .listRowInsets(EdgeInsets(top: 8, leading: 16, bottom: 8, trailing: 16))
+            }
+
+            Section(L10n.text(.notes, for: languageManager)) {
                 Text(variant.description.value(for: languageManager))
+                    .font(.body)
+                    .lineSpacing(3)
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(variant.name.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

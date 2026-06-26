@@ -31,6 +31,7 @@ struct LineupSearchView: View {
                 }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(L10n.text(.search, for: languageManager))
         .searchable(
             text: $searchText,
@@ -222,7 +223,7 @@ private extension UtilityType {
         case .molotov:
             return ["Molotov", "火"]
         case .he:
-            return ["HE", "雷"]
+            return ["HE", "Grenade", "雷"]
         }
     }
 }

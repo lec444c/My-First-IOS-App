@@ -32,6 +32,7 @@ struct LineupGroupDetailView: View {
                 }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(group.targetName.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -71,7 +72,7 @@ private struct VariantCard: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 10) {
                 Text(group.type.symbol)
                     .font(.headline)
@@ -83,6 +84,9 @@ private struct VariantCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(variant.name.value(for: languageManager))
                         .font(.headline)
+                    Text(L10n.text(.variantSubtitle, for: languageManager))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     Text(variant.difficultyDisplayName(for: languageManager))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
@@ -106,7 +110,7 @@ private struct VariantCard: View {
                 value: variant.throwMethod.value(for: languageManager)
             )
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 8)
     }
 
     private func labeledText(title: String, value: String) -> some View {

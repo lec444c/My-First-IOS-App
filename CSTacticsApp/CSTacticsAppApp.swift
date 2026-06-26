@@ -8,10 +8,22 @@ struct CSTacticsAppApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MapListView()
-                .environmentObject(languageManager)
-                .environmentObject(developerSettings)
-                .environmentObject(favoriteStore)
+            NavigationStack {
+                MirageDetailView()
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            NavigationLink {
+                                SettingsView()
+                            } label: {
+                                Image(systemName: "gearshape")
+                            }
+                            .accessibilityLabel(L10n.text(.settings, for: languageManager))
+                        }
+                    }
+            }
+            .environmentObject(languageManager)
+            .environmentObject(developerSettings)
+            .environmentObject(favoriteStore)
         }
     }
 }
