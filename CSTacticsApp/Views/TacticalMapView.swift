@@ -467,7 +467,7 @@ private struct MapCanvas: View {
             }
         }
 
-        let screenDistance: CGFloat = zoomScale > 2.0 ? 28 : 58
+        let screenDistance = clusterDistance(for: zoomScale)
         var clusters: [LineupCluster] = []
 
         for group in groups {
@@ -483,6 +483,19 @@ private struct MapCanvas: View {
         }
 
         return clusters
+    }
+
+    private func clusterDistance(for zoomScale: CGFloat) -> CGFloat {
+        switch zoomScale {
+        case ..<1.5:
+            return 92
+        case ..<2.0:
+            return 76
+        case ..<3.0:
+            return 52
+        default:
+            return 36
+        }
     }
 
     private func draggableGroupTarget(
@@ -625,6 +638,34 @@ private struct UtilityPoint: View {
     let group: LineupGroup
 
     var body: some View {
+        ZStack {
+            Circle()
+                .fill(group.type.color)
+                .frame(width: 26, height: 26)
+                .overlay {
+                    Circle()
+                        .stroke(.white.opacity(0.95), lineWidth: 2)
+                }
+
+            Circle()
+                .fill(.white.opacity(0.8))
+                .frame(width: 6, height: 6)
+        }
+        .shadow(radius: 2)
+        .frame(width: 44, height: 44)
+        .contentShape(Rectangle())
+        .accessibilityLabel(
+            "\(group.targetName.value(for: languageManager)), \(group.type.displayName(for: languageManager))"
+        )
+    }
+}
+
+private struct DeveloperUtilityPoint: View {
+    @EnvironmentObject private var languageManager: LanguageManager
+
+    let group: LineupGroup
+
+    var body: some View {
         Text(group.type.symbol)
             .font(.headline)
             .foregroundStyle(group.type == .flash ? .black : .white)
@@ -688,7 +729,7 @@ private struct EditableMapPoint: View {
     var body: some View {
         ZStack {
             if kind == .groupTarget {
-                UtilityPoint(group: group)
+                DeveloperUtilityPoint(group: group)
             } else {
                 VariantStartPoint(group: group)
             }
