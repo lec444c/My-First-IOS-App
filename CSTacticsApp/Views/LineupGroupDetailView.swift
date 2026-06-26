@@ -2,8 +2,13 @@ import SwiftUI
 
 struct LineupGroupDetailView: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var favoriteStore: FavoriteStore
 
     let group: LineupGroup
+
+    private var isFavorite: Bool {
+        favoriteStore.isFavoriteGroup(group)
+    }
 
     var body: some View {
         List {
@@ -22,12 +27,26 @@ struct LineupGroupDetailView: View {
                     } label: {
                         VariantCard(group: group, variant: variant)
                             .environmentObject(languageManager)
+                            .environmentObject(favoriteStore)
                     }
                 }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(group.targetName.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    favoriteStore.toggleGroup(group)
+                } label: {
+                    Image(systemName: isFavorite ? "star.fill" : "star")
+                }
+                .accessibilityLabel(
+                    L10n.text(isFavorite ? .removeFavorite : .addFavorite, for: languageManager)
+                )
+            }
+        }
     }
 
     private func detailRow(_ title: String, _ value: String) -> some View {
@@ -43,12 +62,17 @@ struct LineupGroupDetailView: View {
 
 private struct VariantCard: View {
     @EnvironmentObject private var languageManager: LanguageManager
+    @EnvironmentObject private var favoriteStore: FavoriteStore
 
     let group: LineupGroup
     let variant: LineupVariant
 
+    private var isFavorite: Bool {
+        favoriteStore.isFavoriteVariant(variant)
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 10) {
                 Text(group.type.symbol)
                     .font(.headline)
@@ -60,9 +84,20 @@ private struct VariantCard: View {
                 VStack(alignment: .leading, spacing: 3) {
                     Text(variant.name.value(for: languageManager))
                         .font(.headline)
+                    Text(L10n.text(.variantSubtitle, for: languageManager))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                     Text(variant.difficultyDisplayName(for: languageManager))
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                if isFavorite {
+                    Image(systemName: "star.fill")
+                        .foregroundStyle(.yellow)
+                        .accessibilityLabel(L10n.text(.favorites, for: languageManager))
                 }
             }
 
@@ -75,7 +110,7 @@ private struct VariantCard: View {
                 value: variant.throwMethod.value(for: languageManager)
             )
         }
-        .padding(.vertical, 6)
+        .padding(.vertical, 8)
     }
 
     private func labeledText(title: String, value: String) -> some View {
@@ -91,7 +126,8 @@ private struct VariantCard: View {
 
 #Preview {
     NavigationStack {
-        LineupGroupDetailView(group: LineupStore.mirageLineupGroups[0])
+        LineupGroupDetailView(group: LineupStore.mirageMap.lineupGroups[0])
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }

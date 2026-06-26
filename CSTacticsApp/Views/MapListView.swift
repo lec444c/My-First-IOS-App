@@ -6,17 +6,19 @@ struct MapListView: View {
     var body: some View {
         NavigationStack {
             List {
-                NavigationLink {
-                    MirageDetailView()
-                } label: {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text(L10n.text(.mirage, for: languageManager))
-                            .font(.headline)
-                        Text(L10n.text(.lineupCount(LineupStore.mirageLineupGroups.count), for: languageManager))
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                ForEach(LineupStore.maps) { map in
+                    NavigationLink {
+                        MirageDetailView(map: map)
+                    } label: {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(map.name.value(for: languageManager))
+                                .font(.headline)
+                            Text(L10n.text(.lineupCount(map.lineupGroups.count), for: languageManager))
+                                .font(.subheadline)
+                                .foregroundStyle(.secondary)
+                        }
+                        .padding(.vertical, 4)
                     }
-                    .padding(.vertical, 4)
                 }
             }
             .navigationTitle(L10n.text(.maps, for: languageManager))
@@ -37,4 +39,5 @@ struct MapListView: View {
 #Preview {
     MapListView()
         .environmentObject(LanguageManager())
+        .environmentObject(FavoriteStore())
 }

@@ -4,10 +4,10 @@ struct LineupSearchView: View {
     @EnvironmentObject private var languageManager: LanguageManager
     @State private var searchText = ""
 
-    let groups: [LineupGroup]
+    let map: Map
 
     private var results: [LineupSearchResult] {
-        LineupSearch.results(for: searchText, in: groups)
+        LineupSearch.results(for: searchText, in: map)
     }
 
     var body: some View {
@@ -16,8 +16,10 @@ struct LineupSearchView: View {
                 Text(L10n.text(.searchHint, for: languageManager))
                     .foregroundStyle(.secondary)
             } else if results.isEmpty {
-                Text(L10n.text(.searchNoResults, for: languageManager))
-                    .foregroundStyle(.secondary)
+                EmptyStateView(
+                    systemImage: "magnifyingglass",
+                    title: L10n.text(.searchNoResults, for: languageManager)
+                )
             } else {
                 ForEach(results) { result in
                     NavigationLink {
@@ -29,6 +31,7 @@ struct LineupSearchView: View {
                 }
             }
         }
+        .listStyle(.insetGrouped)
         .navigationTitle(L10n.text(.search, for: languageManager))
         .searchable(
             text: $searchText,
@@ -138,7 +141,7 @@ private enum LineupSearchResult: Identifiable {
 }
 
 private enum LineupSearch {
-    static func results(for query: String, in groups: [LineupGroup]) -> [LineupSearchResult] {
+    static func results(for query: String, in map: Map) -> [LineupSearchResult] {
         let normalizedQuery = normalized(query)
         guard !normalizedQuery.isEmpty else {
             return []
@@ -146,7 +149,7 @@ private enum LineupSearch {
 
         var results: [LineupSearchResult] = []
 
-        for group in groups {
+        for group in map.lineupGroups {
             if matches(query: normalizedQuery, terms: groupSearchTerms(for: group)) {
                 results.append(.group(group))
             }
@@ -220,7 +223,7 @@ private extension UtilityType {
         case .molotov:
             return ["Molotov", "火"]
         case .he:
-            return ["HE", "雷"]
+            return ["HE", "Grenade", "雷"]
         }
     }
 }
@@ -244,7 +247,8 @@ private extension LineupCategory {
 
 #Preview {
     NavigationStack {
-        LineupSearchView(groups: LineupStore.mirageLineupGroups)
+        LineupSearchView(map: LineupStore.mirageMap)
             .environmentObject(LanguageManager())
+            .environmentObject(FavoriteStore())
     }
 }

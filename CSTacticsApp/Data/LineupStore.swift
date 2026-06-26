@@ -1,7 +1,18 @@
 import Foundation
 
 enum LineupStore {
-    static let mirageLineupGroups: [LineupGroup] = [
+    static let maps: [Map] = [
+        mirageMap
+    ]
+
+    static let mirageMap = Map(
+        id: "mirage",
+        name: LocalizedText(en: "Mirage", zhHans: "Mirage"),
+        imageName: "mirage_map",
+        lineupGroups: mirageGroups
+    )
+
+    private static let mirageGroups: [LineupGroup] = [
         LineupGroup(
             id: "mirage_window_smoke",
             mapId: "mirage",

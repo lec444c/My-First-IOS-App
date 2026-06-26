@@ -13,7 +13,10 @@ enum L10n {
         case english
         case tacticalMap2D
         case utilityList
-        case chooseMirageTool
+        case mapFeatureSubtitle
+        case listFeatureSubtitle
+        case searchFeatureSubtitle
+        case favoritesFeatureSubtitle
         case categoryASite
         case categoryBSite
         case categoryMid
@@ -41,6 +44,8 @@ enum L10n {
         case targetArea
         case throwMethod
         case description
+        case lineupSteps
+        case notes
         case tapUtilityHint
         case developerMode
         case developerMapHint
@@ -81,6 +86,17 @@ enum L10n {
         case searchNoResults
         case searchResultGroup
         case searchResultVariant
+        case favorites
+        case favoriteGroups
+        case favoriteVariants
+        case addFavorite
+        case removeFavorite
+        case emptyFavorites
+        case emptyFavoritesMessage
+        case emptyUtilities
+        case emptyUtilitiesMessage
+        case variantSubtitle
+        case groupSubtitle
     }
 
     static func text(_ key: Key, for languageManager: LanguageManager) -> String {
@@ -101,7 +117,7 @@ enum L10n {
         case .lineupCount(let count):
             return "\(count) utility lineups"
         case .variantCount(let count):
-            return "\(count) variants"
+            return "\(count) options"
         case .settings:
             return "Settings"
         case .language:
@@ -113,11 +129,17 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D Tactical Map"
+            return "2D Map"
         case .utilityList:
-            return "Utility List"
-        case .chooseMirageTool:
-            return "Choose how to study Mirage utility."
+            return "Lineup List"
+        case .mapFeatureSubtitle:
+            return "Browse utility targets on a clean tactical map."
+        case .listFeatureSubtitle:
+            return "Study lineups by site, mid, and side."
+        case .searchFeatureSubtitle:
+            return "Find utility by name, area, or type."
+        case .favoritesFeatureSubtitle:
+            return "Open saved groups and variants."
         case .categoryASite:
             return "A Site"
         case .categoryBSite:
@@ -153,7 +175,7 @@ enum L10n {
         case .difficulty:
             return "Difficulty"
         case .teachingImages:
-            return "Teaching Images"
+            return "Images"
         case .startPosition:
             return "Start Position"
         case .aimPoint:
@@ -172,6 +194,10 @@ enum L10n {
             return "Throw Method"
         case .description:
             return "Description"
+        case .lineupSteps:
+            return "Lineup Steps"
+        case .notes:
+            return "Notes"
         case .tapUtilityHint:
             return "Tap a utility point to view details."
         case .developerMode:
@@ -223,13 +249,13 @@ enum L10n {
         case .mapFilterUtilityType:
             return "Utility Type"
         case .mapFilterFeatured:
-            return "Featured"
+            return "Recommended"
         case .mapFilterAll:
             return "All"
         case .clusteredUtilities:
             return "Utilities"
         case .lineupVariants:
-            return "Lineup Variants"
+            return "Lineup Options"
         case .spawnRequirement:
             return "Spawn / Body Position"
         case .targetPoints:
@@ -251,7 +277,29 @@ enum L10n {
         case .searchResultGroup:
             return "Lineup Group"
         case .searchResultVariant:
-            return "Variant"
+            return "Lineup Option"
+        case .favorites:
+            return "Favorites"
+        case .favoriteGroups:
+            return "Favorite Lineup Groups"
+        case .favoriteVariants:
+            return "Favorite Lineup Options"
+        case .addFavorite:
+            return "Add Favorite"
+        case .removeFavorite:
+            return "Remove Favorite"
+        case .emptyFavorites:
+            return "No favorites yet."
+        case .emptyFavoritesMessage:
+            return "Tap the star on a lineup or variant to save it here."
+        case .emptyUtilities:
+            return "No utilities yet."
+        case .emptyUtilitiesMessage:
+            return "Try another filter or add more local lineup data later."
+        case .variantSubtitle:
+            return "Lineup Option"
+        case .groupSubtitle:
+            return "Lineup Group"
         }
     }
 
@@ -276,11 +324,17 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D 战术地图"
+            return "2D 地图"
         case .utilityList:
             return "道具列表"
-        case .chooseMirageTool:
-            return "选择学习 Mirage 道具的方式。"
+        case .mapFeatureSubtitle:
+            return "在简洁地图上浏览道具目标点。"
+        case .listFeatureSubtitle:
+            return "按包点、中路和阵营学习道具。"
+        case .searchFeatureSubtitle:
+            return "按名称、区域或类型快速查找。"
+        case .favoritesFeatureSubtitle:
+            return "查看已收藏的道具组和丢法。"
         case .categoryASite:
             return "A 包点"
         case .categoryBSite:
@@ -335,6 +389,10 @@ enum L10n {
             return "投掷方式"
         case .description:
             return "说明"
+        case .lineupSteps:
+            return "投掷步骤"
+        case .notes:
+            return "备注"
         case .tapUtilityHint:
             return "点击道具点查看详情。"
         case .developerMode:
@@ -415,6 +473,28 @@ enum L10n {
             return "道具组"
         case .searchResultVariant:
             return "丢法"
+        case .favorites:
+            return "收藏"
+        case .favoriteGroups:
+            return "收藏道具组"
+        case .favoriteVariants:
+            return "收藏丢法"
+        case .addFavorite:
+            return "添加收藏"
+        case .removeFavorite:
+            return "取消收藏"
+        case .emptyFavorites:
+            return "暂无收藏"
+        case .emptyFavoritesMessage:
+            return "点击道具组或丢法右上角的星标即可收藏。"
+        case .emptyUtilities:
+            return "暂无道具"
+        case .emptyUtilitiesMessage:
+            return "可以切换筛选条件，或后续继续添加本地道具数据。"
+        case .variantSubtitle:
+            return "丢法"
+        case .groupSubtitle:
+            return "道具组"
         }
     }
 }

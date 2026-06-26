@@ -1,6 +1,13 @@
 import Foundation
 import SwiftUI
 
+struct Map: Identifiable, Hashable {
+    let id: String
+    let name: LocalizedText
+    let imageName: String
+    let lineupGroups: [LineupGroup]
+}
+
 struct LineupGroup: Identifiable, Hashable {
     let id: String
     let mapId: String
