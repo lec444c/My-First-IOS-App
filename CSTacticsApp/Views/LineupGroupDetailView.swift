@@ -14,9 +14,18 @@ struct LineupGroupDetailView: View {
         List {
             Section(L10n.text(.overview, for: languageManager)) {
                 detailRow(L10n.text(.name, for: languageManager), group.targetName.value(for: languageManager))
-                detailRow(L10n.text(.type, for: languageManager), group.type.displayName(for: languageManager))
-                detailRow(L10n.text(.side, for: languageManager), group.side)
-                detailRow(L10n.text(.category, for: languageManager), group.category.displayName(for: languageManager))
+                badgeRow(
+                    L10n.text(.type, for: languageManager),
+                    UtilityBadge.utilityType(group.type, for: languageManager)
+                )
+                badgeRow(
+                    L10n.text(.side, for: languageManager),
+                    UtilityBadge.side(group.side)
+                )
+                badgeRow(
+                    L10n.text(.category, for: languageManager),
+                    UtilityBadge.category(group.category, for: languageManager)
+                )
                 detailRow(L10n.text(.lineupVariants, for: languageManager), L10n.text(.variantCount(group.variants.count), for: languageManager))
             }
 
@@ -33,6 +42,8 @@ struct LineupGroupDetailView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(group.targetName.value(for: languageManager))
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -58,6 +69,15 @@ struct LineupGroupDetailView: View {
                 .multilineTextAlignment(.trailing)
         }
     }
+
+    private func badgeRow(_ title: String, _ badge: UtilityBadge) -> some View {
+        HStack(alignment: .center) {
+            Text(title)
+                .foregroundStyle(AppTheme.secondaryText)
+            Spacer()
+            badge
+        }
+    }
 }
 
 private struct VariantCard: View {
@@ -74,12 +94,7 @@ private struct VariantCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             HStack(spacing: 10) {
-                Text(group.type.symbol)
-                    .font(.headline)
-                    .foregroundStyle(group.type == .flash ? .black : .white)
-                    .frame(width: 32, height: 32)
-                    .background(group.type.color)
-                    .clipShape(Circle())
+                MapMarkerView(type: group.type, markerSize: 32)
 
                 VStack(alignment: .leading, spacing: 3) {
                     Text(variant.name.value(for: languageManager))
@@ -87,9 +102,7 @@ private struct VariantCard: View {
                     Text(L10n.text(.variantSubtitle, for: languageManager))
                         .font(.caption)
                         .foregroundStyle(.secondary)
-                    Text(variant.difficultyDisplayName(for: languageManager))
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    UtilityBadge.difficulty(variant.difficultyDisplayName(for: languageManager))
                 }
 
                 Spacer()
@@ -110,7 +123,7 @@ private struct VariantCard: View {
                 value: variant.throwMethod.value(for: languageManager)
             )
         }
-        .padding(.vertical, 8)
+        .padding(.vertical, AppTheme.smallCornerRadius - 2)
     }
 
     private func labeledText(title: String, value: String) -> some View {

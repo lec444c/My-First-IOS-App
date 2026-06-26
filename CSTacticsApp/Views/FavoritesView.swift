@@ -55,6 +55,8 @@ struct FavoritesView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .scrollContentBackground(.hidden)
+        .background(AppTheme.background)
         .navigationTitle(L10n.text(.favorites, for: languageManager))
     }
 }
@@ -66,20 +68,20 @@ private struct FavoriteGroupRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            UtilityBadge(type: group.type)
+            MapMarkerView(type: group.type, markerSize: 32)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(group.targetName.value(for: languageManager))
                     .font(.headline)
                 Text(L10n.text(.groupSubtitle, for: languageManager))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
                 Text(L10n.text(.variantCount(group.variants.count), for: languageManager))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, AppTheme.smallCornerRadius - 6)
     }
 }
 
@@ -90,33 +92,20 @@ private struct FavoriteVariantRow: View {
 
     var body: some View {
         HStack(spacing: 12) {
-            UtilityBadge(type: item.group.type)
+            MapMarkerView(type: item.group.type, markerSize: 32)
 
             VStack(alignment: .leading, spacing: 4) {
                 Text(item.variant.name.value(for: languageManager))
                     .font(.headline)
                 Text(item.group.targetName.value(for: languageManager))
                     .font(.subheadline)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
                 Text(item.variant.startArea.value(for: languageManager))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.secondaryText)
             }
         }
-        .padding(.vertical, 4)
-    }
-}
-
-private struct UtilityBadge: View {
-    let type: UtilityType
-
-    var body: some View {
-        Text(type.symbol)
-            .font(.headline)
-            .foregroundStyle(type == .flash ? .black : .white)
-            .frame(width: 34, height: 34)
-            .background(type.color)
-            .clipShape(Circle())
+        .padding(.vertical, AppTheme.smallCornerRadius - 6)
     }
 }
 

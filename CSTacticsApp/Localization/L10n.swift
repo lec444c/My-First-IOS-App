@@ -129,9 +129,9 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D Map"
+            return "2D Tactical Map"
         case .utilityList:
-            return "Lineup List"
+            return "Utility List"
         case .mapFeatureSubtitle:
             return "Browse utility targets on a clean tactical map."
         case .listFeatureSubtitle:
@@ -324,7 +324,7 @@ enum L10n {
         case .english:
             return "English"
         case .tacticalMap2D:
-            return "2D 地图"
+            return "2D 战术地图"
         case .utilityList:
             return "道具列表"
         case .mapFeatureSubtitle:

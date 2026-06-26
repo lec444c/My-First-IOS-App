@@ -15,12 +15,14 @@ struct MapListView: View {
                                 .font(.headline)
                             Text(L10n.text(.lineupCount(map.lineupGroups.count), for: languageManager))
                                 .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(AppTheme.secondaryText)
                         }
-                        .padding(.vertical, 4)
+                        .padding(.vertical, AppTheme.smallCornerRadius - 6)
                     }
                 }
             }
+            .scrollContentBackground(.hidden)
+            .background(AppTheme.background)
             .navigationTitle(L10n.text(.maps, for: languageManager))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

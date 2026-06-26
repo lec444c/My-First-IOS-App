@@ -110,13 +110,13 @@ enum UtilityType: String, CaseIterable, Hashable {
     var color: Color {
         switch self {
         case .smoke:
-            return .gray
+            return AppTheme.smokeColor
         case .flash:
-            return .yellow
+            return AppTheme.flashColor
         case .molotov:
-            return .orange
+            return AppTheme.molotovColor
         case .he:
-            return .red
+            return AppTheme.heColor
         }
     }
 
