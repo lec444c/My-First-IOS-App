@@ -1,0 +1,268 @@
+{
+  "id": "mirage",
+  "name": {
+    "en": "Mirage",
+    "zhHans": "Mirage"
+  },
+  "imageName": "mirage_map",
+  "lineupGroups": [
+    {
+      "id": "mirage_window_smoke",
+      "mapId": "mirage",
+      "targetName": {
+        "en": "Window Smoke",
+        "zhHans": "VIP 烟"
+      },
+      "type": "Smoke",
+      "side": "T",
+      "category": "mid",
+      "targetMapX": 0.46,
+      "targetMapY": 0.36,
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "mirage_window_smoke_standard_t_spawn",
+          "name": {
+            "en": "Standard T Spawn",
+            "zhHans": "匪家稳定丢法"
+          },
+          "spawnRequirement": {
+            "en": "Any T spawn, stable lineup.",
+            "zhHans": "任意 T 出生点，稳定站位。"
+          },
+          "startArea": {
+            "en": "T Spawn",
+            "zhHans": "匪家"
+          },
+          "targetArea": {
+            "en": "Window",
+            "zhHans": "VIP"
+          },
+          "throwMethod": {
+            "en": "Position: T Spawn. Aim: roof reference. Throw: jump throw.",
+            "zhHans": "站位：匪家。瞄点：屋顶参考点。投掷：跳投。"
+          },
+          "description": {
+            "en": "Blocks Mid Window for mid control.",
+            "zhHans": "封中路窗口，方便拿中路控制。"
+          },
+          "difficulty": "Medium",
+          "startMapX": 0.46,
+          "startMapY": 0.31,
+          "targetMapX": 0.46,
+          "targetMapY": 0.36,
+          "positionImageName": "mirage_window_smoke_position",
+          "aimImageName": "mirage_window_smoke_aim",
+          "resultImageName": "mirage_window_smoke_result"
+        },
+        {
+          "id": "mirage_window_smoke_left_spawn",
+          "name": {
+            "en": "Left Spawn Fast Throw",
+            "zhHans": "靠左出生快丢"
+          },
+          "spawnRequirement": {
+            "en": "Best for left T spawns or fast mid control.",
+            "zhHans": "适合靠左 T 出生点或快速拿中路。"
+          },
+          "startArea": {
+            "en": "T Spawn",
+            "zhHans": "匪家"
+          },
+          "targetArea": {
+            "en": "Window",
+            "zhHans": "VIP"
+          },
+          "throwMethod": {
+            "en": "Position: left T spawn. Aim: roof edge. Throw: jump throw.",
+            "zhHans": "站位：匪家左侧。瞄点：屋檐边。投掷：跳投。"
+          },
+          "description": {
+            "en": "A faster Window Smoke option for mid pressure.",
+            "zhHans": "更快封 VIP，方便中路前压。"
+          },
+          "difficulty": "Medium",
+          "startMapX": 0.43,
+          "startMapY": 0.30,
+          "targetMapX": 0.46,
+          "targetMapY": 0.36,
+          "positionImageName": "mirage_window_smoke_left_spawn_position",
+          "aimImageName": "mirage_window_smoke_left_spawn_aim",
+          "resultImageName": "mirage_window_smoke_left_spawn_result"
+        }
+      ]
+    },
+    {
+      "id": "mirage_ct_smoke",
+      "mapId": "mirage",
+      "targetName": {
+        "en": "CT Smoke",
+        "zhHans": "警家烟"
+      },
+      "type": "Smoke",
+      "side": "T",
+      "category": "aSite",
+      "targetMapX": 0.69,
+      "targetMapY": 0.50,
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "mirage_ct_smoke_t_spawn",
+          "name": {
+            "en": "T Spawn Lineup",
+            "zhHans": "匪家丢法"
+          },
+          "spawnRequirement": {
+            "en": "Any T spawn, useful for A execute.",
+            "zhHans": "任意 T 出生点，适合 A 区进攻。"
+          },
+          "startArea": {
+            "en": "T Spawn",
+            "zhHans": "匪家"
+          },
+          "targetArea": {
+            "en": "CT",
+            "zhHans": "警家"
+          },
+          "throwMethod": {
+            "en": "Position: T Spawn. Aim: wall reference. Throw: jump throw.",
+            "zhHans": "站位：匪家。瞄点：墙体参考点。投掷：跳投。"
+          },
+          "description": {
+            "en": "Blocks CT for an A site execute.",
+            "zhHans": "封警家，帮助进攻 A 包点。"
+          },
+          "difficulty": "Easy",
+          "startMapX": 0.63,
+          "startMapY": 0.37,
+          "targetMapX": 0.69,
+          "targetMapY": 0.50,
+          "positionImageName": "mirage_ct_smoke_position",
+          "aimImageName": "mirage_ct_smoke_aim",
+          "resultImageName": "mirage_ct_smoke_result"
+        },
+        {
+          "id": "mirage_ct_smoke_a_ramp",
+          "name": {
+            "en": "A Ramp Lineup",
+            "zhHans": "A Ramp 丢法"
+          },
+          "spawnRequirement": {
+            "en": "Best when grouping at A Ramp.",
+            "zhHans": "适合队伍在 A Ramp 集合时使用。"
+          },
+          "startArea": {
+            "en": "A Ramp",
+            "zhHans": "A Ramp"
+          },
+          "targetArea": {
+            "en": "CT",
+            "zhHans": "警家"
+          },
+          "throwMethod": {
+            "en": "Position: A Ramp. Aim: wall reference. Throw: jump throw.",
+            "zhHans": "站位：A Ramp。瞄点：墙体参考点。投掷：跳投。"
+          },
+          "description": {
+            "en": "A Ramp option for blocking CT during an A execute.",
+            "zhHans": "A Ramp 进攻时用于封警家。"
+          },
+          "difficulty": "Medium",
+          "startMapX": 0.55,
+          "startMapY": 0.44,
+          "targetMapX": 0.69,
+          "targetMapY": 0.50,
+          "positionImageName": "mirage_ct_smoke_a_ramp_position",
+          "aimImageName": "mirage_ct_smoke_a_ramp_aim",
+          "resultImageName": "mirage_ct_smoke_a_ramp_result"
+        }
+      ]
+    },
+    {
+      "id": "mirage_jungle_smoke",
+      "mapId": "mirage",
+      "targetName": {
+        "en": "Jungle Smoke",
+        "zhHans": "Jungle 烟"
+      },
+      "type": "Smoke",
+      "side": "T",
+      "category": "aSite",
+      "targetMapX": 0.42,
+      "targetMapY": 0.62,
+      "isFeatured": true,
+      "variants": [
+        {
+          "id": "mirage_jungle_smoke_a_ramp",
+          "name": {
+            "en": "A Ramp Lineup",
+            "zhHans": "A Ramp 丢法"
+          },
+          "spawnRequirement": {
+            "en": "Useful for standard A executes.",
+            "zhHans": "适合常规 A 区进攻。"
+          },
+          "startArea": {
+            "en": "A Ramp",
+            "zhHans": "A Ramp"
+          },
+          "targetArea": {
+            "en": "Jungle",
+            "zhHans": "Jungle"
+          },
+          "throwMethod": {
+            "en": "Position: A Ramp. Aim: top wall reference. Throw: jump throw.",
+            "zhHans": "站位：A Ramp。瞄点：上方墙体参考。投掷：跳投。"
+          },
+          "description": {
+            "en": "Blocks Jungle to reduce crossfire on A site.",
+            "zhHans": "封 Jungle，减少 A 包点交叉火力。"
+          },
+          "difficulty": "Medium",
+          "startMapX": 0.58,
+          "startMapY": 0.35,
+          "targetMapX": 0.42,
+          "targetMapY": 0.62,
+          "positionImageName": "mirage_jungle_smoke_position",
+          "aimImageName": "mirage_jungle_smoke_aim",
+          "resultImageName": "mirage_jungle_smoke_result"
+        },
+        {
+          "id": "mirage_jungle_smoke_palace",
+          "name": {
+            "en": "Palace Lineup",
+            "zhHans": "二楼丢法"
+          },
+          "spawnRequirement": {
+            "en": "Use when setting up from Palace.",
+            "zhHans": "适合从 A 二楼组织进攻时使用。"
+          },
+          "startArea": {
+            "en": "Palace",
+            "zhHans": "A 二楼"
+          },
+          "targetArea": {
+            "en": "Jungle",
+            "zhHans": "Jungle"
+          },
+          "throwMethod": {
+            "en": "Position: Palace. Aim: top wall reference. Throw: jump throw.",
+            "zhHans": "站位：A 二楼。瞄点：上方墙体参考。投掷：跳投。"
+          },
+          "description": {
+            "en": "Blocks Jungle for a Palace or A split execute.",
+            "zhHans": "封 Jungle，配合 A 二楼或夹 A 进攻。"
+          },
+          "difficulty": "Medium",
+          "startMapX": 0.64,
+          "startMapY": 0.67,
+          "targetMapX": 0.42,
+          "targetMapY": 0.62,
+          "positionImageName": "mirage_jungle_smoke_palace_position",
+          "aimImageName": "mirage_jungle_smoke_palace_aim",
+          "resultImageName": "mirage_jungle_smoke_palace_result"
+        }
+      ]
+    }
+  ]
+}
