@@ -6,8 +6,8 @@ struct MirageDetailView: View {
     let map: Map
 
     var body: some View {
-        List {
-            Section {
+        ScrollView {
+            LazyVStack(spacing: 12) {
                 featureLink(
                     title: L10n.text(.tacticalMap2D, for: languageManager),
                     subtitle: L10n.text(.mapFeatureSubtitle, for: languageManager),
@@ -44,9 +44,8 @@ struct MirageDetailView: View {
                     FavoritesView(map: map)
                 }
             }
+            .padding(AppTheme.pagePadding)
         }
-        .listStyle(.insetGrouped)
-        .scrollContentBackground(.hidden)
         .background(AppTheme.background)
         .navigationTitle(map.name.value(for: languageManager))
     }
@@ -68,16 +67,7 @@ struct MirageDetailView: View {
                 color: color
             )
         }
-        .listRowInsets(
-            EdgeInsets(
-                top: 6,
-                leading: AppTheme.pagePadding,
-                bottom: 6,
-                trailing: AppTheme.pagePadding
-            )
-        )
-        .listRowSeparator(.hidden)
-        .listRowBackground(Color.clear)
+        .buttonStyle(.plain)
     }
 }
 
