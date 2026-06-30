@@ -59,7 +59,7 @@ struct LineupDetailView: View {
 
             Section(L10n.text(.position, for: languageManager)) {
                 detailRow(L10n.text(.startArea, for: languageManager), variant.startArea.value(for: languageManager))
-                detailRow(L10n.text(.targetArea, for: languageManager), group.targetName.value(for: languageManager))
+                detailRow(L10n.text(.targetArea, for: languageManager), variant.targetArea.value(for: languageManager))
                 detailRow(L10n.text(.spawnRequirement, for: languageManager), variant.spawnRequirement.value(for: languageManager))
             }
 

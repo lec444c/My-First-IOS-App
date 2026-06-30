@@ -1,14 +1,14 @@
 import Foundation
 import SwiftUI
 
-struct Map: Identifiable, Hashable {
+struct Map: Identifiable, Hashable, Codable {
     let id: String
     let name: LocalizedText
     let imageName: String
     let lineupGroups: [LineupGroup]
 }
 
-struct LineupGroup: Identifiable, Hashable {
+struct LineupGroup: Identifiable, Hashable, Codable {
     let id: String
     let mapId: String
     let targetName: LocalizedText
@@ -25,11 +25,12 @@ struct LineupGroup: Identifiable, Hashable {
     }
 }
 
-struct LineupVariant: Identifiable, Hashable {
+struct LineupVariant: Identifiable, Hashable, Codable {
     let id: String
     let name: LocalizedText
     let spawnRequirement: LocalizedText
     let startArea: LocalizedText
+    let targetArea: LocalizedText
     let throwMethod: LocalizedText
     let description: LocalizedText
     let difficulty: String
@@ -61,7 +62,7 @@ struct LineupVariant: Identifiable, Hashable {
     }
 }
 
-enum LineupCategory: String, CaseIterable, Hashable {
+enum LineupCategory: String, CaseIterable, Hashable, Codable {
     case aSite
     case bSite
     case mid
@@ -88,7 +89,7 @@ enum LineupCategory: String, CaseIterable, Hashable {
     }
 }
 
-enum UtilityType: String, CaseIterable, Hashable {
+enum UtilityType: String, CaseIterable, Hashable, Codable {
     case smoke = "Smoke"
     case flash = "Flash"
     case molotov = "Molotov"

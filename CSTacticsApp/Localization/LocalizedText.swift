@@ -1,6 +1,6 @@
 import Foundation
 
-struct LocalizedText: Hashable {
+struct LocalizedText: Hashable, Codable {
     let en: String
     let zhHans: String
 
