@@ -151,6 +151,7 @@ private enum LineupSearchResult: Identifiable {
             return [
                 group.targetName.value(for: languageManager),
                 variant.startArea.value(for: languageManager),
+                variant.targetArea.value(for: languageManager),
                 variant.difficultyDisplayName(for: languageManager)
             ].joined(separator: " · ")
         }
@@ -201,6 +202,8 @@ private enum LineupSearch {
             variant.spawnRequirement.zhHans,
             variant.startArea.en,
             variant.startArea.zhHans,
+            variant.targetArea.en,
+            variant.targetArea.zhHans,
             variant.throwMethod.en,
             variant.throwMethod.zhHans,
             variant.description.en,
